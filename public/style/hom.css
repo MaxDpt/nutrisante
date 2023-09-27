@@ -1,0 +1,15 @@
+.home_nav {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 60%;
+    height: 3rem;
+    background-color: lightgrey;
+    margin: auto;
+    margin-top: 0.2rem ;
+}
+.home_nav button {
+    margin: auto 5%;
+    padding: 0.9rem 3%;
+    border: 1px solid;
+}

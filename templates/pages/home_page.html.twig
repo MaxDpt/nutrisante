@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{# --- JAVASCRIPT --- #}
+{% block javascripts %}
+        <script src="{{ asset('script/home_script.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+        {% block nav %}
+            {% include "partials/home/_home_navigation.html.twig" %}
+        {% endblock %}
+
+        <div class="home_content">
+            {% include "partials/home/_recettes_page.html.twig" %}
+        </div>
+
+        {% block footer %}
+            {% include "partials/_footer.html.twig" %}
+        {% endblock %}
+{% endblock %}

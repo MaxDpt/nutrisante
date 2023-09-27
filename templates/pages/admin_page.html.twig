@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{# --- JAVASCRIPT --- #}
+{% block javascripts %}
+        <script src="{{ asset('script/admin_script.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+        {% block nav %}
+            {% include "partials/admin/_admin_navigation.html.twig" %}
+        {% endblock %}
+
+        <h1> ADMINISTRATION </h1>
+
+        <div class="admin_content">
+            {% include "partials/admin/_gestion_page.html.twig" %}
+        </div>
+{% endblock %}
