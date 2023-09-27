@@ -42,9 +42,9 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
-    
+
     #[Route('/legalNotice', name: 'app.legalNotice')]
-    public function legalNotice(Request $request): Response
+    public function legalNotice(): Response
     {
         // --> LEGAL NOTICE PAGE
         return $this->render('pages/legalNotice_page.html.twig', [
@@ -53,7 +53,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/privacyPolicy', name: 'app.privacyPolicy')]
-    public function privacyPolicy(Request $request): Response
+    public function privacyPolicy(): Response
     {
         // --> PRIVACY POLICY PAGE
         return $this->render('pages/privacyPolicy_page.html.twig', [
