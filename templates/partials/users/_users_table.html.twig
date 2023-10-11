@@ -4,7 +4,6 @@
     <tr>
       <th scope="col">Nom</th>
       <th scope="col">Prenom</th>
-      <th scope="col">Email</th>
       <th scope="col"></th>
     </tr>
   </thead>
@@ -14,8 +13,7 @@
     <tr>
       <th scope="row">{{users.name}}</th>
       <td>{{users.lastname}}</td>
-      <td>{{users.email}}</td>
-      <td><button id="userClass" value={{users.id}}>consulter</button></td>
+      <td id="table-btn"><button id="userClass" value={{users.id}}>consulter</button></td>
     </tr>
 {% endfor %}
 {% else %}

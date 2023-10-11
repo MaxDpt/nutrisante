@@ -1,9 +1,8 @@
 {% set queryParams = app.request.query.all %}
 {% set totalPage = ((totalUsers / usersLimit)|round(0, 'ceil')) %}
 
-<h1>GESTION</h1>
-
 <div class="users_table">
+<div class="table_header">
 <div class="pagination">
     {# Pagination des utilisateurs #}
     <button id="usersPrev" >Prev</button>
@@ -18,6 +17,7 @@
 
 <div class="new_btn">
   <button id="new_user">Nouvelle utilisateur</button>
+</div>
 </div>
 
 <div class="users_table_content">

@@ -1,3 +1,4 @@
+/*--- HEADER ---*/
 header {
     display: flex;
     flex-direction: row;
@@ -26,12 +27,18 @@ header {
 header h2 {
     margin: auto 5%;
     width: 30%;
+    font-size: 20px;
 }
 header a {
     margin: auto 5%;
     padding: 0.6rem 3%;
 }
+#icon_header {
+    width: 2rem;
+    height: 2rem;
+}
 
+/*--- FOOTER ---*/
 footer {
     display: flex;
     flex-direction: row;
@@ -56,4 +63,20 @@ footer {
 }
 footer a {
     margin: auto;
+}
+
+@media screen and (max-width: 900px) {
+/*--- HEADER ---*/
+    header h2 {
+        font-size: 12px;
+    }
+    #icon_header {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+/*--- FOOTER ---*/
+    footer a {
+        font-size: 12px;
+    }
 }

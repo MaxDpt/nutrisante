@@ -14,3 +14,15 @@
     border: none;
     background-color: transparent;
 }
+
+@media screen and (max-width: 900px) {
+/*--- NAVIGATION ---*/
+.home_nav {
+    width: 100%;
+}
+.home_nav button {
+    margin: auto 2%;
+    padding: 0.6rem 3%;
+    font-size: 14px;
+}
+    }
