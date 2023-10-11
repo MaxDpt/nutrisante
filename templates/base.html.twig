@@ -10,11 +10,12 @@
     {# --- STYLESHEETS --- #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.2.3/dist/litera/bootstrap.min.css">
             {# Assets CSS #}
-            <link rel="stylesheet" href="{{ asset('style/head_foot.css') }} " type="text/css">
-            <link rel="stylesheet" href="{{ asset('style/app.css') }} " type="text/css">
-            <link rel="stylesheet" href="{{ asset('style/hom.css') }} " type="text/css">
-            <link rel="stylesheet" href="{{ asset('style/admin.css') }} " type="text/css">
+            <link rel="stylesheet" href="{{ asset('style/head_foott.css') }} " type="text/css">
+            <link rel="stylesheet" href="{{ asset('style/apps.css') }} " type="text/css">
+            <link rel="stylesheet" href="{{ asset('style/homm.css') }} " type="text/css">
+            <link rel="stylesheet" href="{{ asset('style/adminn.css') }} " type="text/css">
         {% endblock %}
 
     {# --- JAVASCRIPT --- #}

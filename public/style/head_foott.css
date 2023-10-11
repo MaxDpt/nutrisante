@@ -22,7 +22,6 @@ header {
     display: flex;
     flex-direction: row;
     width: 70%;
-    border: 1px solid;
 }
 header h2 {
     margin: auto 5%;
@@ -30,8 +29,7 @@ header h2 {
 }
 header a {
     margin: auto 5%;
-    padding: 0.9rem 3%;
-    border: 1px solid;
+    padding: 0.6rem 3%;
 }
 
 footer {

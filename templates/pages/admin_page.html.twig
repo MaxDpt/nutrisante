@@ -2,7 +2,7 @@
 
 {# --- JAVASCRIPT --- #}
 {% block javascripts %}
-        <script src="{{ asset('script/admin_script.js') }}"></script>
+        <script src="{{ asset('script/admin_scriptss.js') }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -10,7 +10,11 @@
             {% include "partials/admin/_admin_navigation.html.twig" %}
         {% endblock %}
 
-        <h1> ADMINISTRATION </h1>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{message}}
+            </div>
+        {% endfor %}
 
         <div class="admin_content">
             {% include "partials/admin/_gestion_page.html.twig" %}

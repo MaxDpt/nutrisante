@@ -1,2 +1,26 @@
+{% set queryParams = app.request.query.all %}
+{% set totalPage = ((totalUsers / usersLimit)|round(0, 'ceil')) %}
 
 <h1>GESTION</h1>
+
+<div class="users_table">
+<div class="pagination">
+    {# Pagination des utilisateurs #}
+    <button id="usersPrev" >Prev</button>
+
+    {% for pageItem in 1..(((totalUsers / usersLimit)|round(0, 'ceil'))) %}
+      <button id="usersPageItem" value="{{pageItem}}" >{{pageItem}}</button>
+    {% endfor %}
+
+    <button id="usersNext" >Next</button>
+    <input type="hidden" value="{{totalUsers}}">
+</div>
+
+<div class="new_btn">
+  <button id="new_user">Nouvelle utilisateur</button>
+</div>
+
+<div class="users_table_content">
+    {% include "partials/users/_users_table.html.twig" %}
+</div>
+</div>

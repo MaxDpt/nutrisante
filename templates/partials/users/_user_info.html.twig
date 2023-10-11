@@ -1,0 +1,31 @@
+<div class="info-content">
+<div class="info-button">
+    <button id="info_update" value={{user.id}}>Modifier</button>
+    <button id="info_delete" value={{user.id}}>Supprimer</button>
+</div>
+
+<table class="table table-hover">
+  <tbody>
+    <tr>
+      <td>nom : {{user.name}} </td>
+    </tr>
+    <tr>
+      <td>prenom : {{user.lastname}}</td>
+    </tr>
+    <tr>
+      <td>naissance : {{user.birth|date('d/m/y')}}</td>
+    </tr>
+    <tr>
+      <td>régime(s) : {{user.diet|join(', ')}}</td>
+    </tr>
+    <tr>
+      <td>allergie(s) : {{user.allergen|join(', ')}}</td>
+    </tr>
+    <tr>
+      <td>email : {{user.email}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+{% include "partials/_confirm.html.twig" %}

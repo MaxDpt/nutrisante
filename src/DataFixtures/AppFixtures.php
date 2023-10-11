@@ -29,10 +29,23 @@ class AppFixtures extends Fixture
             ->setBirth(new \DateTime('04/10/1972'))
             ->setEmail('sandrine.coupart@email.com')
             ->setPlainPassword('Adminadmin11')
-            ->setRoles(['ROLE_ADMINISTRATOR'], ['ROLE_USER']);
-
-
+            ->setRoles(['ROLE_ADMINISTRATOR', 'ROLE_USER']);
         $manager->persist($user);
+
+        // --> USER ADMIN
+        for($i = 1; $i < 20; $i ++) {
+            $users = new User();
+            $users
+                ->setName($this->faker->lastName())
+                ->setLastname($this->faker->firstName())
+                ->setBirth(new \DateTime('04/10/1972'))
+                ->setDiet([$this->faker->word(), $this->faker->word()])
+                ->setAllergen([$this->faker->word(), $this->faker->word()])
+                ->setEmail($this->faker->email())
+                ->setPlainPassword('Password')
+                ->setRoles(['ROLE_USER']);
+            $manager->persist($users);
+        }
 
         $manager->flush();
     }

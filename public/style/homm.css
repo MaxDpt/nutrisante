@@ -10,6 +10,7 @@
 }
 .home_nav button {
     margin: auto 5%;
-    padding: 0.9rem 3%;
-    border: 1px solid;
+    padding: 0.6rem 3%;
+    border: none;
+    background-color: transparent;
 }

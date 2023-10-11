@@ -1,9 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="form_content">
     <h1> CONNEXION </h1>
 
-    {% block footer %}
-        {% include "partials/_footer.html.twig" %}
-    {% endblock %}
+    <form acttion="{{ path('app.login')}}" method="POST">
+        <label for="email">email :</label>
+        <input id="email" name="_username"
+         type="email" placeholder="Entrez votre addresse email"
+         value="{{last_username}}">
+
+        <label for="password">mot de passe :</label>
+        <input id="password" name="_password"
+        type="password" placeholder="Entrez votre mot de passe">
+
+        <button type="submit">se connecter</button>
+    </form>
+
+    {% if error %}
+        <div class="error-flash">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+</div>
+
+{% block footer %}
+    {% include "partials/_footer.html.twig" %}
+{% endblock %}
+
 {% endblock %}
