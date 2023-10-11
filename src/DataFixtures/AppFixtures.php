@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Recipes;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -32,7 +33,7 @@ class AppFixtures extends Fixture
             ->setRoles(['ROLE_ADMINISTRATOR', 'ROLE_USER']);
         $manager->persist($user);
 
-        // --> USER ADMIN
+        // --> USERS
         for($i = 1; $i < 20; $i ++) {
             $users = new User();
             $users
@@ -46,6 +47,27 @@ class AppFixtures extends Fixture
                 ->setRoles(['ROLE_USER']);
             $manager->persist($users);
         }
+
+        // --> RECIPES
+        for($i = 1; $i < 20; $i ++) {
+            $users = new Recipes();
+            $users
+                ->setName($this->faker->lastName())
+                ->setPrepaTime(new \DateTime('01:30:00'))
+                ->setCookingTime(new \DateTime('00:20:00'))
+                ->setRestTime(new \DateTime('00:20:00'))
+                ->setDiet([$this->faker->word(), $this->faker->word()])
+                ->setAllergen([$this->faker->word(), $this->faker->word()])
+                ->setDescription($this->faker->paragraph())
+                ->setIngredient([$this->faker->word(), $this->faker->word()])
+                ->setStage([$this->faker->word() => $this->faker->paragraph(), $this->faker->word() => $this->faker->paragraph()])
+                ->setImages([$this->faker->word(), $this->faker->word()])
+                ->setScore(0)
+                ;
+            $manager->persist($users);
+        }
+
+
 
         $manager->flush();
     }

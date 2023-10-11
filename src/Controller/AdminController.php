@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\RecipesRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,13 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'app.admin')]
-    public function index(Request $request, UserRepository $userRepository): Response
+    public function index(
+                            Request $request, 
+                            UserRepository $userRepository,
+                            RecipesRepository $recipesRepository): Response
     {
+        /* --- USERS --- */
         $usersLimit = 8;
         $usersPage = $request->get("userTablePage") ? $request->get("userTablePage") : 1;
         $users = $userRepository->findAllPaginatedUsers($usersPage, $usersLimit);
-
         $totalUsers = $userRepository->getTotalUsers();
+        /* --- RECIPES --- */
+        $recipesLimit = 8;
+        $recipesPage = $request->get("recipesTablePage") ? $request->get("recipesTablePage") : 1;
+        $recipes = $recipesRepository->findAllPaginatedRecipes($recipesPage, $recipesLimit);
+        $totalRecipes = $recipesRepository->getTotalRecipes();
 
         /* ---------- NAVIGATION ---------- */
         // --> ajax GESTION
@@ -28,6 +37,9 @@ class AdminController extends AbstractController
                     'users' => $users,
                     'totalUsers' => $totalUsers,
                     'usersLimit' => $usersLimit,
+                    'recipes' => $recipes,
+                    'totalRecipes' => $totalRecipes,
+                    'recipesLimit' => $recipesLimit,
                 ])
             ]);
         }
@@ -47,6 +59,22 @@ class AdminController extends AbstractController
                     'users' => $users,
                     'totalUsers' => $totalUsers,
                     'usersLimit' => $usersLimit,
+                    'recipes' => $recipes,
+                    'totalRecipes' => $totalRecipes,
+                    'recipesLimit' => $recipesLimit,
+                ])
+            ]);
+        }
+        // --> ajax RECIPE TABLE
+        if($request->get('ajax') && $request->get('recipesTablePage')) {
+            return new JsonResponse([
+                'content' => $this->renderView('partials/recipes/_recipes_table.html.twig', [
+                    'users' => $users,
+                    'totalUsers' => $totalUsers,
+                    'usersLimit' => $usersLimit,
+                    'recipes' => $recipes,
+                    'totalRecipes' => $totalRecipes,
+                    'recipesLimit' => $recipesLimit,
                 ])
             ]);
         }
@@ -55,6 +83,9 @@ class AdminController extends AbstractController
             'users' => $users,
             'totalUsers' => $totalUsers,
             'usersLimit' => $usersLimit,
+            'recipes' => $recipes,
+            'totalRecipes' => $totalRecipes,
+            'recipesLimit' => $recipesLimit,
         ]);
     }
 }

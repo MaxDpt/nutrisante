@@ -1,0 +1,16 @@
+<div class="info-content">
+<div class="info-button">
+    <button class="update" id="info_update_recipe" value={{recipe.id}}>Modifier</button>
+    <button id="info_delete" value={{recipe.id}}>Supprimer</button>
+</div>
+
+<table class="table table-hover">
+  <tbody>
+    <tr>
+      <td>nom : {{recipe.name}} </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+{% include "partials/_confirm.html.twig" %}

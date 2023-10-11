@@ -1,0 +1,89 @@
+<div class="form_content">
+    <h1> Formulaire de recette </h1>
+    {{ form_start(form, {'action': path('update_recipes', {recipeid: recipe.id}) }) }}
+
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.prepaTime) }}
+        {{ form_widget(form.prepaTime) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.cookingTime) }}
+        {{ form_widget(form.cookingTime) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.restTime) }}
+        {{ form_widget(form.restTime) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.diet) }}
+        {{ form_widget(form.diet) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.allergen) }}
+        {{ form_widget(form.allergen) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.ingredient) }}
+        {{ form_widget(form.ingredient) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.stage) }}
+        {{ form_widget(form.stage) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.images) }}
+        {{ form_widget(form.images) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group-submit">
+        {{ form_row(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+</div>

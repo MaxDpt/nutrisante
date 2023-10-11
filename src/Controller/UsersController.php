@@ -81,7 +81,7 @@ class UsersController extends AbstractController
             $manager->flush();
             return $this->redirectToRoute('app.admin');
         } elseif ( $form->isSubmitted() && !$form->isValid()) {
-            dd($userRepository->findOneBy(['id' => $request->get('userid')]));
+            dd($form->getData());
         };
 
         // --> ajax GET FORMULARY

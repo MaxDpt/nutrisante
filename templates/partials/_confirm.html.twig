@@ -3,7 +3,12 @@
         <p>Voulez-vous supprimer l'utilisateur ?</p>
         <div class="confirm_btn">
             <a id="cancel">Annuler</a>
-            <a id="delete" href={{ path('delete_user', {userid: user.id}) }}>Supprimer</a>
+            {% if user is defined %}
+              <a id="delete" href={{ path('delete_user', {userid: user.id}) }}>Supprimer</a>
+            {% endif %}
+            {% if recipe is defined %}
+              <a id="delete" href={{ path('delete_recipe', {recipeid: recipe.id}) }}>Supprimer</a>
+            {% endif %}
         </div>
     </div>
 </div>

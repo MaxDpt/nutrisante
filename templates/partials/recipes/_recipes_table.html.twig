@@ -1,0 +1,26 @@
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% if not recipes is same as([]) %}
+{% for recipes in recipes %}
+    <tr>
+      <th scope="row">{{recipes.name}}</th>
+      <td id="table-btn"><button id="recipeClass" value={{recipes.id}}>consulter</button></td>
+    </tr>
+{% endfor %}
+{% else %}
+    <tr>
+      <th> Aucune recette enregistré. </th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr> 
+{% endif %} 
+  </tbody>
+</table>

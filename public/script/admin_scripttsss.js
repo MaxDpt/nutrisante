@@ -1,12 +1,11 @@
 window.onload = () => {
 
+    console.log("hello");
     navMenu();
     TablePage();
     GetClass();
     GetFormClass();
     deleteConfirm();
-
-    console.log("hello");
 
 function navMenu() {
     // ----> NAVIGATION :
@@ -55,10 +54,13 @@ function  TablePage() {
         button.addEventListener("click",() => { 
             // récupération de l'url courante
             const Url = new URL(window.location.href);
-            let urlPage = (Url.search).split('?userTablePage=')[1];
+            let urlPageUser = (Url.search).split('?userTablePage=')[1];
+            let urlPageRecipe = (Url.search).split('?recipesTablePage=')[1];
 
             // récupération de la page courante
-            let userPage = urlPage ? parseInt(urlPage) : 1;
+            let userPage = urlPageUser ? parseInt(urlPageUser) : 1;
+            // récupération de la page courante
+            let recipePage = urlPageRecipe ? parseInt(urlPageRecipe) : 1;
 
             // creation des parametre url (queryString)
             const Params = new URLSearchParams();
@@ -71,6 +73,13 @@ function  TablePage() {
             if (button.id == "usersPageItem") { Params.append("userTablePage", parseInt(button.value)),
                                             ParamsAttr = "user"}
 
+            if (button.id == "recipesPrev") { Params.append("recipesTablePage", recipePage -1),
+                                            ParamsAttr = "recipe"}
+            if (button.id == "recipesNext") { Params.append("recipesTablePage", recipePage +1),
+                                            ParamsAttr = "recipe"}
+            if (button.id == "recipesPageItem") { Params.append("recipesTablePage", parseInt(button.value)),
+                                            ParamsAttr = "recipe"}                                
+
             // requete AJAX 
             fetch(Url.pathname + "?" + Params.toString()+ "&ajax=1", {
                 headers: {
@@ -81,8 +90,14 @@ function  TablePage() {
         
                 ).then(data => {
                 // mise à jours du contenue de la table utilisateur
-                if (ParamsAttr = "user") {
+                if (ParamsAttr == "user") {
                 const content = document.querySelector(".users_table_content"); 
+                content.innerHTML = data.content;
+                GetClass();
+                GetFormClass(); }
+                // mise à jours du contenue de la table ingredient
+                if (ParamsAttr == "recipe") {
+                const content = document.querySelector(".recipes_table_content"); 
                 content.innerHTML = data.content;
                 GetClass();
                 GetFormClass(); }
@@ -109,9 +124,11 @@ function  TablePage() {
  
              if (button.id == "userClass") { Params.append("userid", button.value),
                                              ParamsAttr = "user"}
+             if (button.id == "recipeClass") { Params.append("recipeid", button.value),
+                                             ParamsAttr = "recipes"}
  
              // requete AJAX 
-             fetch("/user"+ "?" + Params.toString()+ "&ajax=1", {
+             fetch("/"+ParamsAttr+ "?" + Params.toString()+ "&ajax=1", {
                  headers: {
                      "x-Requested-With": "XMLHttpRequest"
                  }
@@ -123,7 +140,7 @@ function  TablePage() {
                  const content = document.querySelector(".admin_content");
                  content.innerHTML = data.content;
                  GetFormClass();
-                 deleteConfirm();
+                 deleteConfirm(); 
          
                  // mise à jours de l'url 
                  history.pushState({}, null, Url.pathname + "?" + Params.toString())
@@ -137,19 +154,22 @@ function  TablePage() {
 
  function GetFormClass() {
     // ----> NAVIGATION :
-    document.querySelectorAll(".info-button #info_update").forEach(button => {
+    document.querySelectorAll(".info-button .update").forEach(button => {
         button.addEventListener("click", () => { 
             // creation des parametre url (queryString)
             const Params = new URLSearchParams();
+            let ParamsAttr = null
 
             // récupération de l'url courante
             const Url = new URL(window.location.href);
 
-            if (button.id == "info_update") { Params.append("userid", button.value),
+            if (button.id == "info_update_user") { Params.append("userid", button.value),
                                               ParamsAttr = "user"}
+            if (button.id == "info_update_recipe") { Params.append("recipeid", button.value),
+                                              ParamsAttr = "recipes"}
 
             // requete AJAX 
-            fetch("/user/update"+ "?" + Params.toString()+ "&ajax=1", {
+            fetch("/"+ ParamsAttr +"/update"+ "?" + Params.toString()+ "&ajax=1", {
                 headers: {
                     "x-Requested-With": "XMLHttpRequest"
                 }
@@ -172,12 +192,16 @@ function  TablePage() {
     })
     document.querySelectorAll(".new_btn button").forEach(button => {
         button.addEventListener("click", () => { 
+            let ParamsAttr = null
 
             // récupération de l'url courante
             const Url = new URL(window.location.href);
 
+            if (button.id == "new_user") { ParamsAttr = "user" }
+            if (button.id == "new_recipes") { ParamsAttr = "recipes" }
+
             // requete AJAX 
-            fetch("/user/set"+ "?" + "&ajax=1", {
+            fetch("/"+ ParamsAttr +"/set"+ "?" + "&ajax=1", {
                 headers: {
                     "x-Requested-With": "XMLHttpRequest"
                 }

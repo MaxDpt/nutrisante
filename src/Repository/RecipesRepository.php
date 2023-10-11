@@ -21,28 +21,27 @@ class RecipesRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipes::class);
     }
 
-//    /**
-//     * @return Recipes[] Returns an array of Recipes objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+/**
+* @return Users[] Returns an array of Recipes objects
+*/
+public function findAllPaginatedRecipes($recipesPage, $recipesLimit)
+{
+   $query = $this->createQueryBuilder('r');
+       $query->orderBy('r.id', 'DESC')
+       ->setFirstResult(($recipesPage * $recipesLimit) - $recipesLimit)
+       ->setMaxResults($recipesLimit)
+   ;
+   return $query->getQuery()->getResult();
+}
 
-//    public function findOneBySomeField($value): ?Recipes
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+/**
+* @return Count Returns total number of Recipes
+*/
+public function getTotalRecipes()
+{
+   $query = $this->createQueryBuilder('r')
+       ->select('COUNT(r)');
+   
+   return $query->getQuery()->getSingleScalarResult();
+}
 }
