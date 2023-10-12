@@ -13,7 +13,8 @@
 </div>
 <div class="new_btn">
   {# Ajout d'un utilisateur #}
-  <button id="new_user">Nouvelle utilisateur</button>
+  <button id="new_user">Nouveau patient</svg>
+  </button>
 </div>
 </div>
 
@@ -40,5 +41,26 @@
 
 <div class="recipes_table_content">
     {% include "partials/recipes/_recipes_table.html.twig" %}
+</div>
+</div>
+
+<div class="services_table">
+<div class="table_header">
+<div class="pagination">
+  {# Pagination des utilisateurs #}
+  <button id="servicesPrev" >Prev</button>
+  {% for pageItem in 1..(((totalservices / servicesLimit)|round(0, 'ceil'))) %}
+    <button id="servicesPageItem" value="{{pageItem}}" >{{pageItem}}</button>
+  {% endfor %}
+  <button id="servicesNext" >Next</button>
+</div>
+<div class="new_btn">
+  {# Ajout d'un utilisateur #}
+  <button id="new_service">Nouveau service</button>
+</div>
+</div>
+
+<div class="services_table_content">
+    {% include "partials/services/_services_table.html.twig" %}
 </div>
 </div>

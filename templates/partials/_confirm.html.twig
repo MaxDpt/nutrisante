@@ -9,6 +9,9 @@
             {% if recipe is defined %}
               <a id="delete" href={{ path('delete_recipe', {recipeid: recipe.id}) }}>Supprimer</a>
             {% endif %}
+            {% if service is defined %}
+              <a id="delete" href={{ path('delete_service', {serviceid: service.id}) }}>Supprimer</a>
+            {% endif %}
         </div>
     </div>
 </div>

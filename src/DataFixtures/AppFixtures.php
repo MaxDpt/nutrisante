@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Recipes;
+use App\Entity\Services;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -65,6 +66,16 @@ class AppFixtures extends Fixture
                 ->setScore(0)
                 ;
             $manager->persist($users);
+        }
+
+        // --> SERVICES
+        for($i = 1; $i < 15; $i ++) {
+            $services = new Services();
+            $services
+                ->setName($this->faker->word())
+                ->setDescription($this->faker->paragraph())
+                ;
+            $manager->persist($services);
         }
 
 

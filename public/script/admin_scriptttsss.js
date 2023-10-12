@@ -56,11 +56,12 @@ function  TablePage() {
             const Url = new URL(window.location.href);
             let urlPageUser = (Url.search).split('?userTablePage=')[1];
             let urlPageRecipe = (Url.search).split('?recipesTablePage=')[1];
+            let urlPageservice = (Url.search).split('?servicesTablePage=')[1];
 
             // récupération de la page courante
             let userPage = urlPageUser ? parseInt(urlPageUser) : 1;
-            // récupération de la page courante
             let recipePage = urlPageRecipe ? parseInt(urlPageRecipe) : 1;
+            let servicePage = urlPageservice ? parseInt(urlPageservice) : 1;
 
             // creation des parametre url (queryString)
             const Params = new URLSearchParams();
@@ -78,7 +79,14 @@ function  TablePage() {
             if (button.id == "recipesNext") { Params.append("recipesTablePage", recipePage +1),
                                             ParamsAttr = "recipe"}
             if (button.id == "recipesPageItem") { Params.append("recipesTablePage", parseInt(button.value)),
-                                            ParamsAttr = "recipe"}                                
+                                            ParamsAttr = "recipe"}   
+            
+            if (button.id == "servicesPrev") { Params.append("servicesTablePage", servicePage -1),
+                                            ParamsAttr = "service"}
+            if (button.id == "servicesNext") { Params.append("servicesTablePage", servicePage +1),
+                                            ParamsAttr = "service"}
+            if (button.id == "servicesPageItem") { Params.append("servicesTablePage", parseInt(button.value)),
+                                            ParamsAttr = "service"} 
 
             // requete AJAX 
             fetch(Url.pathname + "?" + Params.toString()+ "&ajax=1", {
@@ -101,6 +109,12 @@ function  TablePage() {
                 content.innerHTML = data.content;
                 GetClass();
                 GetFormClass(); }
+                // mise à jours du contenue de la table service
+                if (ParamsAttr == "service") {
+                    const content = document.querySelector(".services_table_content"); 
+                    content.innerHTML = data.content;
+                    GetClass();
+                    GetFormClass(); }
         
                 // mise à jours de l'url 
                 history.pushState({}, null, Url.pathname + "?" + Params.toString())
@@ -126,6 +140,8 @@ function  TablePage() {
                                              ParamsAttr = "user"}
              if (button.id == "recipeClass") { Params.append("recipeid", button.value),
                                              ParamsAttr = "recipes"}
+            if (button.id == "serviceClass") { Params.append("serviceid", button.value),
+                                             ParamsAttr = "service"}
  
              // requete AJAX 
              fetch("/"+ParamsAttr+ "?" + Params.toString()+ "&ajax=1", {
@@ -167,6 +183,8 @@ function  TablePage() {
                                               ParamsAttr = "user"}
             if (button.id == "info_update_recipe") { Params.append("recipeid", button.value),
                                               ParamsAttr = "recipes"}
+            if (button.id == "info_update_service") { Params.append("serviceid", button.value),
+                                              ParamsAttr = "service"}
 
             // requete AJAX 
             fetch("/"+ ParamsAttr +"/update"+ "?" + Params.toString()+ "&ajax=1", {
@@ -199,6 +217,7 @@ function  TablePage() {
 
             if (button.id == "new_user") { ParamsAttr = "user" }
             if (button.id == "new_recipes") { ParamsAttr = "recipes" }
+            if (button.id == "new_service") { ParamsAttr = "service" }
 
             // requete AJAX 
             fetch("/"+ ParamsAttr +"/set"+ "?" + "&ajax=1", {

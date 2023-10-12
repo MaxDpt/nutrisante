@@ -21,28 +21,28 @@ class ServicesRepository extends ServiceEntityRepository
         parent::__construct($registry, Services::class);
     }
 
-//    /**
-//     * @return Services[] Returns an array of Services objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Services[] Returns an array of services objects
+     */
+    public function findAllPaginatedServices($servicesPage, $servicesLimit)
+    {
+        $query = $this->createQueryBuilder('s');
+            $query->orderBy('s.id', 'DESC')
+            ->setFirstResult(($servicesPage * $servicesLimit) - $servicesLimit)
+            ->setMaxResults($servicesLimit)
+        ;
+        return $query->getQuery()->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Services
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @return Count Returns total number of services
+     */
+    public function getTotalServices()
+    {
+        $query = $this->createQueryBuilder('s')
+            ->select('COUNT(s)');
+        
+        return $query->getQuery()->getSingleScalarResult();
+    }
 }
+

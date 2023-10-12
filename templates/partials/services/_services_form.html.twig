@@ -1,0 +1,25 @@
+<div class="form_content">
+    <h1> Formulaire services </h1>
+    {{ form_start(form, {'action': path('set_service') }) }}
+
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group-submit">
+        {{ form_row(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+</div>
