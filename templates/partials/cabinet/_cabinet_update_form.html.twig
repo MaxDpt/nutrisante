@@ -1,0 +1,49 @@
+    <div class="form_content">
+    <h1>Formulaire cabinet</h1>
+    {{ form_start(form, {'action': path('update_cabinet', {cabinetid: 1}) }) }}
+
+    <div class="form-group">
+        {{ form_label(form.name) }}
+        {{ form_widget(form.name) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.email) }}
+        {{ form_widget(form.email) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.phone) }}
+        {{ form_widget(form.phone) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.address) }}
+        {{ form_widget(form.address) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group-submit">
+        {{ form_row(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+    </div>

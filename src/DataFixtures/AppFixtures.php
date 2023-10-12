@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Cabinet;
 use App\Entity\Contact;
 use App\Entity\Recipes;
 use App\Entity\Services;
@@ -91,6 +92,18 @@ class AppFixtures extends Fixture
             ;
             $manager->persist($services);
         }
+
+        // --> CABINET
+        $cabinet = new Cabinet();
+        $cabinet
+        ->setName($this->faker->lastName())
+        ->setEmail($this->faker->email())
+        ->setPhone(940414243)
+        ->setAddress('04 avenue de la santé Paris 75004 Iles-de-France')
+        ->setDescription($this->faker->paragraph())
+        ;
+        $manager->persist($cabinet);
+        
 
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\CabinetRepository;
 use App\Repository\ContactRepository;
 use App\Repository\RecipesRepository;
 use App\Repository\ServicesRepository;
@@ -20,7 +21,8 @@ class AdminController extends AbstractController
                             UserRepository $userRepository,
                             RecipesRepository $recipesRepository,
                             ServicesRepository $servicesRepository,
-                            ContactRepository $contactRepository): Response
+                            ContactRepository $contactRepository,
+                            CabinetRepository $cabinetRepository): Response
     {
         /* --- USERS --- */
         $usersLimit = 8;
@@ -42,12 +44,15 @@ class AdminController extends AbstractController
         $messagesPage = $request->get("messagesTablePage") ? $request->get("messagesTablePage") : 1;
         $messages = $contactRepository->findAllPaginatedMessages($messagesPage, $messagesLimit);
         $totalmessages = $contactRepository->getTotalMessages();
+        /* --- CABINET ---*/
+        $cabinet = $cabinetRepository->findAll();
 
         /* ---------- NAVIGATION ---------- */
         // --> ajax GESTION
         if($request->get('ajax') && $request->get('window') == 'gestion') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/admin/_gestion_page.html.twig', [
+                    'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
                     'usersLimit' => $usersLimit,
@@ -76,6 +81,7 @@ class AdminController extends AbstractController
         if($request->get('ajax') && $request->get('userTablePage')) {
             return new JsonResponse([
                 'content' => $this->renderView('partials/users/_users_table.html.twig', [
+                    'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
                     'usersLimit' => $usersLimit,
@@ -92,6 +98,7 @@ class AdminController extends AbstractController
         if($request->get('ajax') && $request->get('recipesTablePage')) {
             return new JsonResponse([
                 'content' => $this->renderView('partials/recipes/_recipes_table.html.twig', [
+                    'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
                     'usersLimit' => $usersLimit,
@@ -108,6 +115,7 @@ class AdminController extends AbstractController
         if($request->get('ajax') && $request->get('servicesTablePage')) {
             return new JsonResponse([
                 'content' => $this->renderView('partials/services/_services_table.html.twig', [
+                    'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
                     'usersLimit' => $usersLimit,
@@ -132,6 +140,7 @@ class AdminController extends AbstractController
         }
 
         return $this->render('pages/admin_page.html.twig', [
+            'cabinet' => $cabinet,
             'users' => $users,
             'totalUsers' => $totalUsers,
             'usersLimit' => $usersLimit,

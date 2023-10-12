@@ -29,7 +29,7 @@ class Cabinet
     #[ORM\Column]
     #[Assert\NotNull()]
     #[Assert\Positive()]
-    #[Assert\Length(min: 10, max: 10)]
+    #[Assert\Length(min: 9, max: 10)]
     private ?int $phone = null;
 
     #[ORM\Column(length: 180)]

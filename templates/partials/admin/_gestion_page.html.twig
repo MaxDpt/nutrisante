@@ -1,23 +1,29 @@
 {% set queryParams = app.request.query.all %}
 {% set totalPage = ((totalUsers / usersLimit)|round(0, 'ceil')) %}
 
+
+  <div class="cabinet_table_content">
+    {% include "partials/cabinet/_cabinet_table.html.twig" %}
+  </div>
+
+
 <div class="users_table">
 <div class="table_header">
-<div class="pagination">
-  {# Pagination des utilisateurs #}
-  <button id="usersPrev" >Prev</button>
-  {% for pageItem in 1..(((totalUsers / usersLimit)|round(0, 'ceil'))) %}
-    <button id="usersPageItem" value="{{pageItem}}" >{{pageItem}}</button>
-  {% endfor %}
-  <button id="usersNext" >Next</button>
+  <div class="pagination">
+    {# Pagination des utilisateurs #}
+    <button id="usersPrev" >Prev</button>
+    {% for pageItem in 1..(((totalUsers / usersLimit)|round(0, 'ceil'))) %}
+      <button id="usersPageItem" value="{{pageItem}}" >{{pageItem}}</button>
+    {% endfor %}
+    <button id="usersNext" >Next</button>
+  </div>
+  <div class="new_btn">
+    {# Ajout d'un utilisateur #}
+    <button id="new_user">Nouveau patient</svg>
+    </button>
+  </div>
 </div>
-<div class="new_btn">
-  {# Ajout d'un utilisateur #}
-  <button id="new_user">Nouveau patient</svg>
-  </button>
-</div>
-</div>
-
+<div class="table_title"><p>Tableau des patients</p></div>
 <div class="users_table_content">
     {% include "partials/users/_users_table.html.twig" %}
 </div>
@@ -38,7 +44,7 @@
   <button id="new_recipes">Nouvelle recette</button>
 </div>
 </div>
-
+<div class="table_title"><p>Tableau des recettes</p></div>
 <div class="recipes_table_content">
     {% include "partials/recipes/_recipes_table.html.twig" %}
 </div>
@@ -59,7 +65,7 @@
   <button id="new_service">Nouveau service</button>
 </div>
 </div>
-
+<div class="table_title"><p>Tableau des services</p></div>
 <div class="services_table_content">
     {% include "partials/services/_services_table.html.twig" %}
 </div>

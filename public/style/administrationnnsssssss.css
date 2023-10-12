@@ -23,15 +23,53 @@
     display: flex;
     justify-content: space-between;
     width: 60%;
-    margin: auto;  
+    margin: auto; 
+    margin-top: 0.5rem;  
 }
+.table_title {
+    display: flex;
+    justify-content: center;
+    width: 60%;
+    height: 3rem;
+    margin: auto;
+    margin-top: 0.5rem; 
+    background-color: lightgrey;
+}
+.table_title p {
+    margin: auto;
+ }
 /*--- TABLE ---*/
-.users_table_content, .recipes_table_content, 
-.services_table_content, .messages_table_content {
+.users_table_content, .recipes_table_content,
+.services_table_content, .messages_table_content, .cabinet_table_content {
     display: flex;
     width: 60%;
     margin: auto;
 }
+#cabinet_table {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    background-color: lightgrey;
+    margin: 1rem 0;
+}
+#cabinet_info { 
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    margin: 0.5rem 1rem;
+}
+#cabinet_btn {
+    display: flex;
+    width: 25%;
+    justify-content: end;
+}
+#cabinet_btn button{
+    height: 2rem;
+    width: 8rem;
+    margin-right: 0.5rem;
+    margin-top: 0.5rem;
+}
+
 table {
     display: flex;
     flex-direction: column;
@@ -69,7 +107,8 @@ th, td {
     width: 100%;
 }
 /*--- TABLE ---*/
-.users_table_content {
+.users_table_content, .recipes_table_content,
+.services_table_content, .messages_table_content, .cabinet_table_content {
     width: 100%;
 }
 }

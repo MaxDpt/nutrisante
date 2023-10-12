@@ -47,7 +47,6 @@ function navMenu() {
         })
     })
 }
-
 function  TablePage() {
     // ----> PAGINATION TABLE :
     document.querySelectorAll(".pagination button").forEach(button => {
@@ -140,7 +139,6 @@ function  TablePage() {
         }) 
     })
 } 
-
  function GetClass() {
      // ----> NAVIGATION :
      document.querySelectorAll(".table button").forEach(button => {
@@ -159,6 +157,8 @@ function  TablePage() {
                                              ParamsAttr = "service"}
             if (button.id == "messageClass") { Params.append("messageid", button.value),
                                              ParamsAttr = "message"}
+            if (button.id == "cabinetClass") { Params.append("cabinetid", parseInt(1)),
+                                             ParamsAttr = "cabinet"}
  
              // requete AJAX 
              fetch("/"+ParamsAttr+ "?" + Params.toString()+ "&ajax=1", {
@@ -183,8 +183,7 @@ function  TablePage() {
                  })
          })
      })
- }
-
+}
  function GetFormClass() {
     // ----> NAVIGATION :
     document.querySelectorAll(".info-button .update").forEach(button => {
@@ -202,6 +201,8 @@ function  TablePage() {
                                               ParamsAttr = "recipes"}
             if (button.id == "info_update_service") { Params.append("serviceid", button.value),
                                               ParamsAttr = "service"}
+            if (button.id == "info_update_cabinet") { Params.append("cabinetid", button.value),
+                                              ParamsAttr = "cabinet"}
 
             // requete AJAX 
             fetch("/"+ ParamsAttr +"/update"+ "?" + Params.toString()+ "&ajax=1", {
