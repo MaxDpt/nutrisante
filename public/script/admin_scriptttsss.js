@@ -12,12 +12,12 @@ function navMenu() {
     document.querySelectorAll(".admin_nav button").forEach(button => {
         button.addEventListener("click", () => { 
             let pageValue = document.querySelector("pageValue")
-            pageValue = parseInt(button.value)
+            pageValue = button.value
 
             // creation des parametre url (queryString)
             const Params = new URLSearchParams();
 
-            Params.append("pageValue", pageValue);
+            Params.append("window", pageValue);
 
             // récupération de l'url courante
             const Url = new URL(window.location.href);
@@ -57,11 +57,13 @@ function  TablePage() {
             let urlPageUser = (Url.search).split('?userTablePage=')[1];
             let urlPageRecipe = (Url.search).split('?recipesTablePage=')[1];
             let urlPageservice = (Url.search).split('?servicesTablePage=')[1];
+            let urlPagemessage = (Url.search).split('?messagesTablePage=')[1];
 
             // récupération de la page courante
             let userPage = urlPageUser ? parseInt(urlPageUser) : 1;
             let recipePage = urlPageRecipe ? parseInt(urlPageRecipe) : 1;
             let servicePage = urlPageservice ? parseInt(urlPageservice) : 1;
+            let messagePage = urlPagemessage ? parseInt(urlPagemessage) : 1;
 
             // creation des parametre url (queryString)
             const Params = new URLSearchParams();
@@ -88,6 +90,13 @@ function  TablePage() {
             if (button.id == "servicesPageItem") { Params.append("servicesTablePage", parseInt(button.value)),
                                             ParamsAttr = "service"} 
 
+            if (button.id == "messagesPrev") { Params.append("messagesTablePage", messagePage -1),
+                                            ParamsAttr = "message"}
+            if (button.id == "messagesNext") { Params.append("messagesTablePage", messagePage +1),
+                                            ParamsAttr = "message"}
+            if (button.id == "messagesPageItem") { Params.append("messagesTablePage", parseInt(button.value)),
+                                            ParamsAttr = "message"} 
+
             // requete AJAX 
             fetch(Url.pathname + "?" + Params.toString()+ "&ajax=1", {
                 headers: {
@@ -112,6 +121,12 @@ function  TablePage() {
                 // mise à jours du contenue de la table service
                 if (ParamsAttr == "service") {
                     const content = document.querySelector(".services_table_content"); 
+                    content.innerHTML = data.content;
+                    GetClass();
+                    GetFormClass(); }
+                // mise à jours du contenue de la table message
+                if (ParamsAttr == "message") {
+                    const content = document.querySelector(".messages_table_content"); 
                     content.innerHTML = data.content;
                     GetClass();
                     GetFormClass(); }
@@ -142,6 +157,8 @@ function  TablePage() {
                                              ParamsAttr = "recipes"}
             if (button.id == "serviceClass") { Params.append("serviceid", button.value),
                                              ParamsAttr = "service"}
+            if (button.id == "messageClass") { Params.append("messageid", button.value),
+                                             ParamsAttr = "message"}
  
              // requete AJAX 
              fetch("/"+ParamsAttr+ "?" + Params.toString()+ "&ajax=1", {

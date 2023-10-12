@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Contact;
 use App\Entity\Recipes;
 use App\Entity\Services;
 use App\Entity\User;
@@ -75,6 +76,19 @@ class AppFixtures extends Fixture
                 ->setName($this->faker->word())
                 ->setDescription($this->faker->paragraph())
                 ;
+            $manager->persist($services);
+        }
+
+        // --> CONTACTS
+        for($i = 1; $i < 32; $i ++) {
+            $services = new Contact();
+            $services
+            ->setName($this->faker->lastName())
+            ->setLastname($this->faker->firstName())
+            ->setEmail($this->faker->email())
+            ->setSubject($this->faker->word())
+            ->setText($this->faker->paragraph())
+            ;
             $manager->persist($services);
         }
 

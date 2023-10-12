@@ -1,0 +1,27 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Prenom</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+{% if not messages is same as([]) %}
+{% for messages in messages %}
+    <tr>
+      <th scope="row">{{messages.name}}</th>
+      <th scope="row">{{messages.lastname}}</th>
+      <td id="table-btn"><button id="messageClass" value={{messages.id}}>consulter</button></td>
+    </tr>
+{% endfor %}
+{% else %}
+    <tr>
+      <th> Aucun message reçu. </th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr> 
+{% endif %} 
+  </tbody>
+</table>

@@ -12,6 +12,9 @@
             {% if service is defined %}
               <a id="delete" href={{ path('delete_service', {serviceid: service.id}) }}>Supprimer</a>
             {% endif %}
+            {% if message is defined %}
+              <a id="delete" href={{ path('delete_message', {messageid: message.id}) }}>Supprimer</a>
+            {% endif %}
         </div>
     </div>
 </div>

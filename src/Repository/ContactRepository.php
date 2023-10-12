@@ -21,28 +21,28 @@ class ContactRepository extends ServiceEntityRepository
         parent::__construct($registry, Contact::class);
     }
 
-//    /**
-//     * @return Contact[] Returns an array of Contact objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return Contacts[] Returns an array of contacts objects
+     */
+    public function findAllPaginatedMessages($messagesPage, $messagesLimit)
+    {
+        $query = $this->createQueryBuilder('c');
+            $query->orderBy('c.id', 'DESC')
+            ->setFirstResult(($messagesPage * $messagesLimit) - $messagesLimit)
+            ->setMaxResults($messagesLimit)
+        ;
+        return $query->getQuery()->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Contact
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @return Count Returns total number of contacts 
+     */
+    public function getTotalMessages()
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select('COUNT(u)');
+        
+        return $query->getQuery()->getSingleScalarResult();
+    }
 }
+

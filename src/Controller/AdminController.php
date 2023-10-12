@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ContactRepository;
 use App\Repository\RecipesRepository;
 use App\Repository\ServicesRepository;
 use App\Repository\UserRepository;
@@ -18,7 +19,8 @@ class AdminController extends AbstractController
                             Request $request, 
                             UserRepository $userRepository,
                             RecipesRepository $recipesRepository,
-                            ServicesRepository $servicesRepository): Response
+                            ServicesRepository $servicesRepository,
+                            ContactRepository $contactRepository): Response
     {
         /* --- USERS --- */
         $usersLimit = 8;
@@ -35,10 +37,15 @@ class AdminController extends AbstractController
         $servicesPage = $request->get("servicesTablePage") ? $request->get("servicesTablePage") : 1;
         $services = $servicesRepository->findAllPaginatedServices($servicesPage, $servicesLimit);
         $totalservices = $servicesRepository->getTotalServices();
+        /* --- MESSAGES --- */
+        $messagesLimit = 14;
+        $messagesPage = $request->get("messagesTablePage") ? $request->get("messagesTablePage") : 1;
+        $messages = $contactRepository->findAllPaginatedMessages($messagesPage, $messagesLimit);
+        $totalmessages = $contactRepository->getTotalMessages();
 
         /* ---------- NAVIGATION ---------- */
         // --> ajax GESTION
-        if($request->get('ajax') && $request->get('pageValue') == 1) {
+        if($request->get('ajax') && $request->get('window') == 'gestion') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/admin/_gestion_page.html.twig', [
                     'users' => $users,
@@ -54,9 +61,12 @@ class AdminController extends AbstractController
             ]);
         }
         // --> ajax MESSAGES
-        if($request->get('ajax') && $request->get('pageValue') == 2) {
+        if($request->get('ajax') && $request->get('window') == 'messages') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/admin/_messages_page.html.twig', [
+                    'messages' => $messages,
+                    'totalmessages' => $totalmessages,
+                    'messagesLimit' => $messagesLimit,
                 ])
             ]);
         }
@@ -107,6 +117,16 @@ class AdminController extends AbstractController
                     'services' => $services,
                     'totalservices' => $totalservices,
                     'servicesLimit' => $servicesLimit,
+                ])
+            ]);
+        }
+        // --> ajax MESSAGES TABLE
+        if($request->get('ajax') && $request->get('messagesTablePage')) {
+            return new JsonResponse([
+                'content' => $this->renderView('partials/messages/_messages_table.html.twig', [
+                    'messages' => $messages,
+                    'totalmessages' => $totalmessages,
+                    'messagesLimit' => $messagesLimit,
                 ])
             ]);
         }

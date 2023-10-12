@@ -26,7 +26,8 @@
     margin: auto;  
 }
 /*--- TABLE ---*/
-.users_table_content, .recipes_table_content, .services_table_content {
+.users_table_content, .recipes_table_content, 
+.services_table_content, .messages_table_content {
     display: flex;
     width: 60%;
     margin: auto;
