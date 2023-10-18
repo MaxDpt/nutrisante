@@ -1,14 +1,14 @@
 
-<h1>MESSAGES</h1>
 <div class="messages_table">
 <div class="table_header">
 <div class="pagination">
   {# Pagination des utilisateurs #}
-  <button id="messagesPrev" >Prev</button>
-  {% for pageItem in 1..(((totalmessages / messagesLimit)|round(0, 'ceil'))) %}
-    <button id="messagesPageItem" value="{{pageItem}}" >{{pageItem}}</button>
-  {% endfor %}
-  <button id="messagesNext" >Next</button>
+    <button id="messagesPrev" disabled>Prev</button>
+      <input id="messages_pages" value="{{1}}" disabled>
+      <p>/</p>
+      <input id="messages_totalPages" value="{{(totalmessages / messagesLimit)|round(0, 'ceil')}}" disabled>
+      <p>page(s)</p>
+    <button id="messagesNext" >Next</button>
 </div>
 </div>
 

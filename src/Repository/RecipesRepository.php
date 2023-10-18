@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Recipes;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Cast\Array_;
 
 /**
  * @extends ServiceEntityRepository<Recipes>
@@ -22,25 +23,54 @@ class RecipesRepository extends ServiceEntityRepository
     }
 
 /**
-* @return Users[] Returns an array of Recipes objects
+* @return Recipes[] Returns an array of Recipes objects
 */
-public function findAllPaginatedRecipes($recipesPage, $recipesLimit)
+public function findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet = null, $allergen = null, $search = null )
 {
-   $query = $this->createQueryBuilder('r');
-       $query->orderBy('r.id', 'DESC')
-       ->setFirstResult(($recipesPage * $recipesLimit) - $recipesLimit)
-       ->setMaxResults($recipesLimit)
-   ;
-   return $query->getQuery()->getResult();
+    $query = $this->createQueryBuilder('r');
+    if ($search !== null) {
+        $query
+        ->andWhere("r.name LIKE '%{$search}%' ");
+    }
+    if ($diet !== null) {
+        for ($i = 0; $i <= count($diet) - 1; $i ++) {
+            $query
+            ->andWhere("r.diet LIKE '%{$diet[$i]}%' ");
+    }}
+    if ($allergen !== null) {
+        for ($i = 0; $i <= count($allergen) - 1; $i ++) {
+            $query
+            ->andWhere("r.allergen NOT LIKE '%{$allergen[$i]}%' ");
+    }}
+    $query
+        ->orderBy('r.id', 'DESC')
+        ->setFirstResult(($recipesPage * $recipesLimit) - $recipesLimit)
+        ->setMaxResults($recipesLimit);
+
+    return $query->getQuery()->getResult();
 }
 
 /**
 * @return Count Returns total number of Recipes
 */
-public function getTotalRecipes()
+public function getTotalRecipes($diet = null, $allergen = null, $search = null)
 {
-   $query = $this->createQueryBuilder('r')
-       ->select('COUNT(r)');
+   $query = $this->createQueryBuilder('r');
+   if ($search !== null) {
+    $query
+    ->andWhere("r.name LIKE '%{$search}%' ");
+    }
+   if ($diet !== null) {
+        for ($i = 0; $i <= count($diet) - 1; $i ++) {
+            $query
+            ->andWhere("r.diet LIKE '%{$diet[$i]}%' ");
+    }}
+    if ($allergen !== null) {
+        for ($i = 0; $i <= count($allergen) - 1; $i ++) {
+            $query
+            ->andWhere("r.allergen NOT LIKE '%{$allergen[$i]}%' ");
+    }}
+    $query ->select('COUNT(r)');
    
    return $query->getQuery()->getSingleScalarResult();
 }

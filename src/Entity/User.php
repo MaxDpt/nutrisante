@@ -53,10 +53,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $birth = null;
 
     #[ORM\Column( nullable: true)]
-    private ?array $diet = null;
+    public ?array $diet = null;
 
     #[ORM\Column( nullable: true)]
-    private ?array $allergen = null;
+    public ?array $allergen = null;
 
 
 

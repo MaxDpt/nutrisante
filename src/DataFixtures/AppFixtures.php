@@ -25,6 +25,22 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $arr_allergen = array(
+            'laitage',
+            'arachide',
+            'oeuf',
+            'crustace',
+            'soja',
+            'poisson'
+        );
+        $arr_diet = array(
+            'proteine',
+            'hyperproteine',
+            'hypocalorique',
+            'vegetarien',
+            'sans sel',
+            'hypoglucidique'
+        );
         // --> USER ADMIN
         $user = new User();
         $user
@@ -43,32 +59,73 @@ class AppFixtures extends Fixture
                 ->setName($this->faker->lastName())
                 ->setLastname($this->faker->firstName())
                 ->setBirth(new \DateTime('04/10/1972'))
-                ->setDiet([$this->faker->word(), $this->faker->word()])
-                ->setAllergen([$this->faker->word(), $this->faker->word()])
+                ->setDiet([$arr_diet[array_rand($arr_diet)], $arr_diet[array_rand($arr_diet)]])
+                ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
                 ->setEmail($this->faker->email())
                 ->setPlainPassword('Password')
                 ->setRoles(['ROLE_USER']);
             $manager->persist($users);
         }
+        $users2 = new User();
+        $users2
+            ->setName($this->faker->lastName())
+            ->setLastname($this->faker->firstName())
+            ->setBirth(new \DateTime('04/10/1972'))
+            ->setDiet(['vegetarien', 'sans sel'])
+            ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
+            ->setEmail($this->faker->email())
+            ->setPlainPassword('Password')
+            ->setRoles(['ROLE_USER']);
+        $manager->persist($users2);
 
         // --> RECIPES
         for($i = 1; $i < 20; $i ++) {
-            $users = new Recipes();
-            $users
+            $recipe = new Recipes();
+            $recipe
                 ->setName($this->faker->lastName())
                 ->setPrepaTime(new \DateTime('01:30:00'))
                 ->setCookingTime(new \DateTime('00:20:00'))
                 ->setRestTime(new \DateTime('00:20:00'))
-                ->setDiet([$this->faker->word(), $this->faker->word()])
-                ->setAllergen([$this->faker->word(), $this->faker->word()])
+                ->setDiet([$arr_diet[array_rand($arr_diet)], $arr_diet[array_rand($arr_diet)]])
+                ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
                 ->setDescription($this->faker->paragraph())
                 ->setIngredient([$this->faker->word(), $this->faker->word()])
                 ->setStage([$this->faker->word() => $this->faker->paragraph(), $this->faker->word() => $this->faker->paragraph()])
                 ->setImages([$this->faker->word(), $this->faker->word()])
                 ->setScore(0)
                 ;
-            $manager->persist($users);
+            $manager->persist($recipe);
         }
+        $recipe2 = new Recipes();
+        $recipe2
+            ->setName($this->faker->lastName())
+            ->setPrepaTime(new \DateTime('01:30:00'))
+            ->setCookingTime(new \DateTime('00:20:00'))
+            ->setRestTime(new \DateTime('00:20:00'))
+            ->setDiet(['vegetarien', 'sans sel'])
+            ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
+            ->setDescription($this->faker->paragraph())
+            ->setIngredient([$this->faker->word(), $this->faker->word()])
+            ->setStage([$this->faker->word() => $this->faker->paragraph(), $this->faker->word() => $this->faker->paragraph()])
+            ->setImages([$this->faker->word(), $this->faker->word()])
+            ->setScore(0)
+            ;
+        $manager->persist($recipe2);
+        $recipe3 = new Recipes();
+        $recipe3
+        ->setName($this->faker->lastName())
+        ->setPrepaTime(new \DateTime('01:30:00'))
+        ->setCookingTime(new \DateTime('00:20:00'))
+        ->setRestTime(new \DateTime('00:20:00'))
+        ->setDiet(['vegetarien', 'sans sel', 'proteine'])
+        ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
+        ->setDescription($this->faker->paragraph())
+        ->setIngredient([$this->faker->word(), $this->faker->word()])
+        ->setStage([$this->faker->word() => $this->faker->paragraph(), $this->faker->word() => $this->faker->paragraph()])
+        ->setImages([$this->faker->word(), $this->faker->word()])
+        ->setScore(0)
+        ;
+    $manager->persist($recipe3);
 
         // --> SERVICES
         for($i = 1; $i < 15; $i ++) {

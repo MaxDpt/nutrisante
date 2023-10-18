@@ -35,10 +35,10 @@ class Recipes
 
     #[ORM\Column(type: Types::ARRAY)]
     #[Assert\NotNull()]
-    private array $diet = [];
+    public array $diet = [];
 
     #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private ?array $allergen = null;
+    public ?array $allergen = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]

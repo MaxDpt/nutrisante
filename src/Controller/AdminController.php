@@ -80,6 +80,8 @@ class AdminController extends AbstractController
         // --> ajax USER TABLE
         if($request->get('ajax') && $request->get('userTablePage')) {
             return new JsonResponse([
+                'totalUsers' => $totalUsers,
+                'usersLimit' => $usersLimit,
                 'content' => $this->renderView('partials/users/_users_table.html.twig', [
                     'cabinet' => $cabinet,
                     'users' => $users,
@@ -97,6 +99,8 @@ class AdminController extends AbstractController
         // --> ajax RECIPE TABLE
         if($request->get('ajax') && $request->get('recipesTablePage')) {
             return new JsonResponse([
+                'totalRecipes' => $totalRecipes,
+                'recipesLimit' => $recipesLimit,
                 'content' => $this->renderView('partials/recipes/_recipes_table.html.twig', [
                     'cabinet' => $cabinet,
                     'users' => $users,
@@ -114,6 +118,8 @@ class AdminController extends AbstractController
         // --> ajax SERVICE TABLE
         if($request->get('ajax') && $request->get('servicesTablePage')) {
             return new JsonResponse([
+                'totalservices' => $totalservices,
+                'servicesLimit' => $servicesLimit,
                 'content' => $this->renderView('partials/services/_services_table.html.twig', [
                     'cabinet' => $cabinet,
                     'users' => $users,
@@ -131,6 +137,8 @@ class AdminController extends AbstractController
         // --> ajax MESSAGES TABLE
         if($request->get('ajax') && $request->get('messagesTablePage')) {
             return new JsonResponse([
+                'totalmessages' => $totalmessages,
+                'messagesLimit' => $messagesLimit,
                 'content' => $this->renderView('partials/messages/_messages_table.html.twig', [
                     'messages' => $messages,
                     'totalmessages' => $totalmessages,

@@ -1,1 +1,34 @@
-<h1> NOS RECETTES </h1>
+<div class="title_page">
+    <h1> NOS RECETTES </h1>
+</div>
+<div class="recipes_list">
+
+<div class="filter_search_content">
+<div class="search">
+  <p><input id="search_input" name="search_input" placeholder="saisir une recherche">
+  <button id="search_btn">rechercher</button></p>
+</div>
+
+<div class="filters">
+  <form class="users-filters">
+    <p><input id="diet_filter" type="checkbox" name="diet_filter" value="true">
+    <label for="diet_filter">mes regimes</label></p>
+
+    <p><input id="allergen_filter" type="checkbox" name="allergen_filter" value="true">
+    <label for="allergen_filter">mes allergenes</label></p>
+  </form>
+</div>
+</div>
+{# Pagination des utilisateurs #}
+<div class="pagination">
+  <button id="recipesPrev" disabled>Prev</button>
+    <input id="recipes_pages" value="{{1}}" disabled>
+    <p>/</p>
+    <input id="recipes_totalPages" value="{{(totalRecipes / recipesLimit)|round(0, 'ceil')}}" disabled>
+    <p>page(s)</p>
+  <button id="recipesNext" >Next</button>
+</div>
+<div class="recipes_list_content">
+    {% include "partials/recipes/_recipes_list.html.twig" %}
+</div>
+</div>

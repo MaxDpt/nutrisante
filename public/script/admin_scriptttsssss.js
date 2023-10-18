@@ -1,6 +1,6 @@
 window.onload = () => {
 
-    console.log("hello");
+    console.log("hellooo");
     navMenu();
     TablePage();
     GetClass();
@@ -53,48 +53,44 @@ function  TablePage() {
         button.addEventListener("click",() => { 
             // récupération de l'url courante
             const Url = new URL(window.location.href);
-            let urlPageUser = (Url.search).split('?userTablePage=')[1];
-            let urlPageRecipe = (Url.search).split('?recipesTablePage=')[1];
-            let urlPageservice = (Url.search).split('?servicesTablePage=')[1];
-            let urlPagemessage = (Url.search).split('?messagesTablePage=')[1];
 
             // récupération de la page courante
-            let userPage = urlPageUser ? parseInt(urlPageUser) : 1;
-            let recipePage = urlPageRecipe ? parseInt(urlPageRecipe) : 1;
-            let servicePage = urlPageservice ? parseInt(urlPageservice) : 1;
-            let messagePage = urlPagemessage ? parseInt(urlPagemessage) : 1;
+            let userPage = document.querySelector('#users_pages') ? document.querySelector('#users_pages').value : 1;
+            let recipePage = document.querySelector('#recipes_pages') ? document.querySelector('#recipes_pages').value : 1;
+            let servicePage = document.querySelector('#services_pages') ? document.querySelector('#services_pages').value : 1;
+            let messagePage = document.querySelector('#messages_pages') ? document.querySelector('#messages_pages').value : 1;
 
             // creation des parametre url (queryString)
             const Params = new URLSearchParams();
             let ParamsAttr = null
 
-            if (button.id == "usersPrev") { Params.append("userTablePage", userPage -1),
+            if (button.id == "usersPrev") { Params.append("userTablePage", parseInt(userPage) -1),
+                                            document.querySelector('#users_pages').value = (parseInt(userPage) -1),
                                             ParamsAttr = "user"}
-            if (button.id == "usersNext") { Params.append("userTablePage", userPage +1),
-                                            ParamsAttr = "user"}
-            if (button.id == "usersPageItem") { Params.append("userTablePage", parseInt(button.value)),
+            if (button.id == "usersNext") { Params.append("userTablePage", parseInt(userPage) +1),
+                                            document.querySelector('#users_pages').value = (parseInt(userPage) +1),
                                             ParamsAttr = "user"}
 
-            if (button.id == "recipesPrev") { Params.append("recipesTablePage", recipePage -1),
+            if (button.id == "recipesPrev") { Params.append("recipesTablePage",  parseInt(recipePage) -1),
+                                            document.querySelector('#recipes_pages').value = (parseInt(recipePage) -1),
                                             ParamsAttr = "recipe"}
-            if (button.id == "recipesNext") { Params.append("recipesTablePage", recipePage +1),
-                                            ParamsAttr = "recipe"}
-            if (button.id == "recipesPageItem") { Params.append("recipesTablePage", parseInt(button.value)),
-                                            ParamsAttr = "recipe"}   
+            if (button.id == "recipesNext") { Params.append("recipesTablePage",  parseInt(recipePage) +1),
+                                            document.querySelector('#recipes_pages').value = (parseInt(recipePage) +1),
+                                            ParamsAttr = "recipe"} 
             
-            if (button.id == "servicesPrev") { Params.append("servicesTablePage", servicePage -1),
+            if (button.id == "servicesPrev") { Params.append("servicesTablePage", parseInt(servicePage) -1),
+                                            document.querySelector('#services_pages').value = (parseInt(servicePage) -1),
                                             ParamsAttr = "service"}
-            if (button.id == "servicesNext") { Params.append("servicesTablePage", servicePage +1),
+            if (button.id == "servicesNext") { Params.append("servicesTablePage", parseInt(servicePage) +1),
+                                            document.querySelector('#services_pages').value = (parseInt(servicePage) +1),
                                             ParamsAttr = "service"}
-            if (button.id == "servicesPageItem") { Params.append("servicesTablePage", parseInt(button.value)),
-                                            ParamsAttr = "service"} 
 
-            if (button.id == "messagesPrev") { Params.append("messagesTablePage", messagePage -1),
+            if (button.id == "messagesPrev") { Params.append("messagesTablePage", parseInt(messagePage) -1),
+                                            document.querySelector('#messages_pages').value = (parseInt(messagePage) -1),
                                             ParamsAttr = "message"}
-            if (button.id == "messagesNext") { Params.append("messagesTablePage", messagePage +1),
+            if (button.id == "messagesNext") { Params.append("messagesTablePage", parseInt(messagePage) +1),
+                                            document.querySelector('#messages_pages').value = (parseInt(messagePage) +1),
                                             ParamsAttr = "message"}
-            if (button.id == "messagesPageItem") { Params.append("messagesTablePage", parseInt(button.value)),
-                                            ParamsAttr = "message"} 
 
             // requete AJAX 
             fetch(Url.pathname + "?" + Params.toString()+ "&ajax=1", {
@@ -107,24 +103,48 @@ function  TablePage() {
                 ).then(data => {
                 // mise à jours du contenue de la table utilisateur
                 if (ParamsAttr == "user") {
+                // activation des boutons
+                if (users_pages.value > 1) { usersPrev.disabled = false } 
+                else { usersPrev.disabled = true }
+                if (users_pages.value < Math.ceil(data.totalUsers / data.usersLimit)) 
+                { usersNext.disabled = false } 
+                else { usersNext.disabled = true }
                 const content = document.querySelector(".users_table_content"); 
                 content.innerHTML = data.content;
                 GetClass();
                 GetFormClass(); }
                 // mise à jours du contenue de la table ingredient
                 if (ParamsAttr == "recipe") {
+                // activation des boutons
+                if (recipes_pages.value > 1) { recipesPrev.disabled = false } 
+                else { recipesPrev.disabled = true }
+                if (recipes_pages.value < Math.ceil(data.totalRecipes / data.recipesLimit)) 
+                { recipesNext.disabled = false } 
+                else { recipesNext.disabled = true }   
                 const content = document.querySelector(".recipes_table_content"); 
                 content.innerHTML = data.content;
                 GetClass();
                 GetFormClass(); }
                 // mise à jours du contenue de la table service
                 if (ParamsAttr == "service") {
+                // activation des boutons
+                if (services_pages.value > 1) { servicesPrev.disabled = false } 
+                else { servicesPrev.disabled = true }
+                if (services_pages.value < Math.ceil(data.totalservices / data.servicesLimit)) 
+                { servicesNext.disabled = false } 
+                else { servicesNext.disabled = true }
                     const content = document.querySelector(".services_table_content"); 
                     content.innerHTML = data.content;
                     GetClass();
                     GetFormClass(); }
                 // mise à jours du contenue de la table message
                 if (ParamsAttr == "message") {
+                // activation des boutons
+                if (messages_pages.value > 1) { messagesPrev.disabled = false } 
+                else { messagesPrev.disabled = true }
+                if (messages_pages.value < Math.ceil(data.totalmessages / data.messagesLimit)) 
+                { messagesNext.disabled = false } 
+                else { messagesNext.disabled = true }
                     const content = document.querySelector(".messages_table_content"); 
                     content.innerHTML = data.content;
                     GetClass();

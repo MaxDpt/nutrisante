@@ -1,1 +1,23 @@
-<h1> NOS SERVICES </h1>
+<div class="title_page">
+    <h1> NOS SERVICES </h1>
+</div>
+<div class="service_list">
+<div class="pagination">
+  {# Pagination des utilisateurs #}
+  <button id="servicesPrev" disabled>Prev</button>
+    <input id="services_pages" 
+      value="{{1}}" 
+      disabled
+    >
+    <p>/</p>
+    <input id="services_totalPages" 
+      value="{{(totalservices / servicesLimit)|round(0, 'ceil')}}" 
+      disabled
+    >
+    <p>page(s)</p>
+  <button id="servicesNext" >Next</button>
+</div>
+<div class="services_list_content">
+    {% include "partials/services/_services_list.html.twig" %}
+</div>
+</div>

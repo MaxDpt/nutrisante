@@ -1,1 +1,10 @@
-<h1> A PROPOS </h1>
+<div class="title_page">
+    <h1> A PROPOS </h1>
+</div>
+<div class="cabinet_table_content">
+    {% include "partials/cabinet/_cabinet_table.html.twig" %}
+</div>
+<div class="info_cabinet">
+<div class="info_title"><h2> Presentation </h2></div>
+<div class="info_description"><p>{{cabinet[0].description}}</p></div>
+</div>

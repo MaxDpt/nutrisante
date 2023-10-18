@@ -9,18 +9,19 @@
 
 <div class="users_table">
 <div class="table_header">
+  {# Pagination des utilisateurs #}
   <div class="pagination">
-    {# Pagination des utilisateurs #}
-    <button id="usersPrev" >Prev</button>
-    {% for pageItem in 1..(((totalUsers / usersLimit)|round(0, 'ceil'))) %}
-      <button id="usersPageItem" value="{{pageItem}}" >{{pageItem}}</button>
-    {% endfor %}
+    <button id="usersPrev" disabled>Prev</button>
+      <input id="users_pages" value="{{1}}" disabled>
+      <p>/</p>
+      <input id="users_totalPages" value="{{(totalUsers / usersLimit)|round(0, 'ceil')}}" disabled>
+      <p>page(s)</p>
     <button id="usersNext" >Next</button>
   </div>
+  
+  {# Ajout d'un utilisateur #}
   <div class="new_btn">
-    {# Ajout d'un utilisateur #}
-    <button id="new_user">Nouveau patient</svg>
-    </button>
+    <button id="new_user">Nouveau patient</button>
   </div>
 </div>
 <div class="table_title"><p>Tableau des patients</p></div>
@@ -32,11 +33,12 @@
 <div class="recipes_table">
 <div class="table_header">
 <div class="pagination">
-  {# Pagination des utilisateurs #}
-  <button id="recipesPrev" >Prev</button>
-  {% for pageItem in 1..(((totalRecipes / recipesLimit)|round(0, 'ceil'))) %}
-    <button id="recipesPageItem" value="{{pageItem}}" >{{pageItem}}</button>
-  {% endfor %}
+  {# Pagination des recettes #}
+  <button id="recipesPrev" disabled>Prev</button>
+    <input id="recipes_pages" value="{{1}}" disabled>
+    <p>/</p>
+    <input id="recipes_totalPages" value="{{(totalRecipes / recipesLimit)|round(0, 'ceil')}}" disabled>
+    <p>page(s)</p>
   <button id="recipesNext" >Next</button>
 </div>
 <div class="new_btn">
@@ -53,15 +55,16 @@
 <div class="services_table">
 <div class="table_header">
 <div class="pagination">
-  {# Pagination des utilisateurs #}
-  <button id="servicesPrev" >Prev</button>
-  {% for pageItem in 1..(((totalservices / servicesLimit)|round(0, 'ceil'))) %}
-    <button id="servicesPageItem" value="{{pageItem}}" >{{pageItem}}</button>
-  {% endfor %}
+  {# Pagination des services #}
+  <button id="servicesPrev" disabled>Prev</button>
+    <input id="services_pages" value="{{1}}" disabled>
+    <p>/</p>
+    <input id="services_totalPages" value="{{(totalservices / servicesLimit)|round(0, 'ceil')}}" disabled>
+    <p>page(s)</p>
   <button id="servicesNext" >Next</button>
 </div>
 <div class="new_btn">
-  {# Ajout d'un utilisateur #}
+  {# Ajout d'un service #}
   <button id="new_service">Nouveau service</button>
 </div>
 </div>
