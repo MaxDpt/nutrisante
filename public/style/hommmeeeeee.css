@@ -46,59 +46,6 @@
     width: 60%;
     margin: 1rem auto;
 }
-/*---- RECIPES LIST ----*/
-.recipe_content {
-    display: flex;
-    flex-direction: column;
-    width: 60%;
-    margin: 1rem auto;
-    box-shadow: grey 1px 1px 6px 2px;
-}
-.recipe_header {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    background-color: lightgrey;
-}
-.recipe_header p {
-    margin: 0.5rem 1rem;
-}
-.recipe_time {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-between;
-    border-bottom: 2px solid lightgrey;
-}
-.recipe_time p{
-    margin: 0.5rem 10%;
-}
-.recipe_diet, .recipe_allergen {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
-    border-bottom: 2px solid lightgrey;
-}
-.recipe_diet p, .recipe_allergen p {
-    margin: 0.5rem 5%;
-}
-.recipe_description {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-.recipe_description p {
-    margin: 1rem;
-}
-#recipe_btn{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: lightgrey;
-}
-#recipe_btn button {
-    margin: 0.5rem auto;
-}
 
 /*---- SERVICE LIST ----*/
 .service_content {
@@ -151,10 +98,7 @@
 .filter_search_content { 
     width: 100%;
 }
-/*---- RECIPE ----*/
-.recipe_content {
-    width: 100%;
-}
+
 /*---- SERVICE LIST ----*/
 .service_content {
     width: 100%;

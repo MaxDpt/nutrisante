@@ -21,6 +21,17 @@ class CommentaryRepository extends ServiceEntityRepository
         parent::__construct($registry, Commentary::class);
     }
 
+    public function findPaginatedCommentaryByRecipe( $commentarysLimit, $recipeId)
+    {
+        $query = $this->createQueryBuilder('c');
+        $query
+            ->where('c.recipe = :recipeId')
+            ->setParameter(':recipeId', $recipeId)
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults($commentarysLimit);
+    
+        return $query->getQuery()->getResult();
+    }
 //    /**
 //     * @return Commentary[] Returns an array of Commentary objects
 //     */

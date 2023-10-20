@@ -1,9 +1,15 @@
 window.onload = () => {
+    console.log('hello');
     navMenu();
     ListPage();
     GetClass();
     ListFilter();
     ListSearch();
+    scoreSelect();
+    commentaryLoad();
+    commentarySubmit();
+    deleteConfirm();
+    commentaryDelete();
     
 function navMenu() {
     // ----> NAVIGATION :
@@ -146,6 +152,7 @@ function  ListPage() {
 } 
 function GetClass() {
     // ----> NAVIGATION :
+    if (document.querySelector(".class_btn")) {
     document.querySelectorAll(".class_btn button").forEach(button => {
         button.addEventListener("click", () => { 
             // creation des parametre url (queryString)
@@ -172,13 +179,19 @@ function GetClass() {
         
                 // mise à jours de l'url 
                 history.pushState({}, null, Url.pathname + "?" + Params.toString())
+                // appel aux fonctions
+                scoreSelect();
+                commentaryLoad();
+                commentarySubmit();
+                deleteConfirm();
+                commentaryDelete();
         
                 }).catch(error => {
                 console.log(error)
                 })
         })
     })
-}
+}}
 function ListFilter() {
     if (document.querySelectorAll(".users-filters input")) {
     const filtersForm = document.querySelector(".users-filters");
@@ -308,5 +321,180 @@ function ListSearch() {
             console.log(error)
             })
     }) }
+}
+function scoreSelect() {
+    if (document.querySelectorAll(".score_form")) {
+    // toutes les etoiles
+    const stars = document.querySelectorAll(".star-form");
+    // la note
+    const note = document.querySelector('.score');
+    // ecouteurs evenements des etoiles
+    for(star of stars) {
+        star.style.color = "white";
+        // le survol
+        star.addEventListener("mouseover", function(){
+            resetStars();
+            this.style.color = "orange";
+
+            // element précendent dans le DOM
+            let previousStar = this.previousElementSibling;
+            while(previousStar) {
+              previousStar.style.color = "orange";
+              previousStar = previousStar.previousElementSibling;
+            }
+        });
+        star.addEventListener("click", function(){
+            note.value = this.dataset.value;
+        });
+        star.addEventListener('mouseout', function(){
+            resetStars(note.value);
+        });
+    }
+    // reset star
+    function resetStars(note = 0) {
+        for(star of stars) {
+            if (star.dataset.value > note) {
+                star.style.color = "white";
+            } else {
+                star.style.color = "orange";
+            }
+        }
+    }
+}
+}
+function commentaryLoad() {
+if (document.querySelector('.commentary_load')) {
+    document.querySelector('.commentary_load a').addEventListener('click', () => {
+        // récupération de l'url courante
+        const Url = new URL(window.location.href);
+        // creation des parametre url (queryString)
+        const Params = new URLSearchParams(Url.search);
+
+        let recipeId = Params.get('recipeid');
+        let urlCommentaryLimit = Params.get('commentaryLimit');
+        let commentaryLimit = urlCommentaryLimit ? urlCommentaryLimit : 4;
+        let newCommentaryLimit = parseInt(commentaryLimit) + 4;
+
+        Params.delete("commentaryLimit");
+        Params.append("commentaryLimit", newCommentaryLimit);
+
+    fetch('/commentary/get' + "?" + Params.toString() + "&ajax=1", {
+        headers: {
+            "x-Requested-With": "XMLHttpRequest"
+        }
+        }).then(response => 
+        response = response.json()
+
+        ).then(data => {
+        // mise à jours du contenue de la page
+        const content = document.querySelector(".commentary_list_content");
+        content.innerHTML = data.content;
+        // mise à jours de l'url 
+        history.pushState({}, null, Url.pathname + "?" + Params.toString());
+
+        // appel aux fonctions
+        deleteConfirm();
+        commentaryLoad();
+        }).catch(error => {
+        console.log(error)
+        })
+
+    })
+}
+}
+function commentarySubmit() {
+    if (document.querySelector(".commentary_form_content .submit")) {
+        document.querySelector(".commentary_form_content .submit").addEventListener("click", (e) => {
+
+        e.preventDefault();
+        const Url = new URL(window.location.href);
+        let recipeId = (Url.search).split('?recipeid=')[1];
+
+        let name = document.querySelector(".commentary_form_content form .name").value;
+        let text = document.querySelector(".commentary_form_content form .text").value;
+        let score = document.querySelector(".commentary_form_content form .score").value;
+
+    // requete AJAX 
+       fetch("/commentary/set" +'?'+ 'name='+ name +'&'+'score='+ score +'&'+'recipeid=' + recipeId + "&ajax=1", {
+           method: 'POST',
+           headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset:utf-8',
+           },
+           body: text
+           
+           }).then(response => 
+           response = response.json()
+
+           ).then(data => {
+           // mise à jours du contenue de la page
+           const content = document.querySelector(".commentary_list_content");
+           content.innerHTML = data.content;
+
+           // mise à jours de l'url 
+           history.pushState({}, null, Url.pathname + '?' + 'recipeid=' + recipeId)
+
+           // appel aux fonctions
+           deleteConfirm();
+           commentaryDelete();
+
+           }).catch(error => {
+           console.log(error)
+           })
+    }) }
+}
+function deleteConfirm() {
+    if (document.querySelector('.commentary_delete')) { 
+        document.querySelectorAll('.commentary_delete button').forEach(button => {
+            button.addEventListener('click', () => { 
+                document.querySelector(".confirm_content").hidden = false
+                // récupération de l'url courante
+                const Url = new URL(window.location.href);
+                // creation des parametre url (queryString)
+                const Params = new URLSearchParams(Url.search);
+                Params.append('commentaryId', button.value)
+                history.pushState({}, null, Url.pathname +'?'+ Params.toString());
+            }) 
+        })
+        document.querySelector(".confirm_btn #cancel").addEventListener("click", () => {
+            document.querySelector(".confirm_content").hidden = true
+            // récupération de l'url courante
+            const Url = new URL(window.location.href);
+            // creation des parametre url (queryString)
+            const Params = new URLSearchParams(Url.search);
+            Params.delete('commentaryId');
+            history.pushState({}, null, Url.pathname +'?'+ Params.toString());
+        })
+    }
+}
+function commentaryDelete() {
+if (document.querySelector('.confirm_btn #delete')) {
+    document.querySelector('.confirm_btn #delete').addEventListener('click', () => {
+        // récupération de l'url courante
+        const Url = new URL(window.location.href);
+        // creation des parametre url (queryString)
+        const Params = new URLSearchParams(Url.search);
+
+        fetch('/commentary/delete' + "?" + Params.toString() + "&ajax=1", {
+            headers: {
+                "x-Requested-With": "XMLHttpRequest"
+            }
+            }).then(response => 
+            response = response.json()
+    
+            ).then(data => {
+            // mise à jours du contenue de la page
+            const content = document.querySelector(".commentary_list_content");
+            content.innerHTML = data.content;
+            // mise à jours de l'url 
+            Params.delete('commentaryId');
+            history.pushState({}, null, Url.pathname + '?' + Params.toString() );
+            document.querySelector(".confirm_content").hidden = true
+            commentaryLoad();
+            }).catch(error => {
+            console.log(error)
+            })
+
+        })
+}
 }
 }

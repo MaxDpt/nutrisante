@@ -34,7 +34,7 @@ class Commentary
 
     #[ORM\ManyToOne(inversedBy: 'commentaries')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?recipes $recipe = null;
+    private ?Recipes $recipe = null;
 
     public function __construct()
     {
@@ -95,12 +95,12 @@ class Commentary
         return $this;
     }
 
-    public function getRecipe(): ?recipes
+    public function getRecipe(): ?Recipes
     {
         return $this->recipe;
     }
 
-    public function setRecipe(?recipes $recipe): static
+    public function setRecipe(?Recipes $recipe): static
     {
         $this->recipe = $recipe;
 

@@ -113,6 +113,7 @@ function  TablePage() {
                 content.innerHTML = data.content;
                 GetClass();
                 GetFormClass(); }
+
                 // mise à jours du contenue de la table ingredient
                 if (ParamsAttr == "recipe") {
                 // activation des boutons
@@ -125,6 +126,7 @@ function  TablePage() {
                 content.innerHTML = data.content;
                 GetClass();
                 GetFormClass(); }
+
                 // mise à jours du contenue de la table service
                 if (ParamsAttr == "service") {
                 // activation des boutons
@@ -137,6 +139,7 @@ function  TablePage() {
                     content.innerHTML = data.content;
                     GetClass();
                     GetFormClass(); }
+                    
                 // mise à jours du contenue de la table message
                 if (ParamsAttr == "message") {
                 // activation des boutons

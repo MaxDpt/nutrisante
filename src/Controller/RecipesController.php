@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Commentary;
 use App\Entity\Recipes;
+use App\Form\CommentaryType;
 use App\Form\RecipesType;
+use App\Repository\CommentaryRepository;
 use App\Repository\RecipesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +18,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class RecipesController extends AbstractController
 {
     #[Route('/recipes', name: 'get_recipes')]
-    public function getOneUser(Request $request, RecipesRepository $recipesRepository): Response
+    public function getRecipe(Request $request, RecipesRepository $recipesRepository, CommentaryRepository $commentaryRepository): Response
     {
-        // --> ajax MESSAGES
+        $recipeId = $request->get('recipeid');
+        $commentarysLimit = $request->get('commentaryLimit') ? $request->get('commentaryLimit') : 4;
+        $commentarys = $commentaryRepository->findPaginatedCommentaryByRecipe( $commentarysLimit, $recipeId);
+        // --> form view
+        $commentary = new Commentary();
+        $form = $this->createForm(CommentaryType::class, $commentary);
+
+        // --> ajax RECETTE INFO
         if($request->get('ajax') && $request->get('recipeid')) {
             $recipe = $recipesRepository->findOneBy(['id' => $request->get('recipeid')]);
             return new JsonResponse([
                 'content' => $this->renderView('partials/recipes/_recipe_info.html.twig', [
-                    'recipe'=>$recipe
+                    'commentarys'=>$commentarys,
+                    'recipe'=>$recipe,
+                    'form'=>$form->createView()
                 ])
             ]);
         }
@@ -81,7 +93,6 @@ class RecipesController extends AbstractController
             return $this->redirectToRoute('app.admin');
 
         } 
-
         // --> ajax GET FORMULARY
         if($request->get('ajax')) {
             return new JsonResponse([
