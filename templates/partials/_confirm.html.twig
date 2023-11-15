@@ -3,7 +3,7 @@
         {% if user is defined %}
           <p>Voulez-vous supprimer l'utilisateur ?</p>
         {% endif %}
-        {% if recipe is defined and commentarys is not defined %}
+        {% if recipe is defined %}
           <p>Voulez-vous supprimer la recette ?</p>
         {% endif %}
         {% if service is defined %}
@@ -12,16 +12,13 @@
         {% if message is defined %}
           <p>Voulez-vous supprimer le message ?</p>
         {% endif %}
-        {% if commentarys is defined %}
-          <p>Voulez-vous supprimer le commentaire ?</p>
-        {% endif %}
 
         <div class="confirm_btn">
             <a id="cancel">Annuler</a>
             {% if user is defined %}
               <a id="delete" href={{ path('delete_user', {userid: user.id}) }}>Supprimer</a>
             {% endif %}
-            {% if recipe is defined and commentarys is not defined %}
+            {% if recipe is defined %}
               <a id="delete" href={{ path('delete_recipe', {recipeid: recipe.id}) }}>Supprimer</a>
             {% endif %}
             {% if service is defined %}
@@ -29,9 +26,6 @@
             {% endif %}
             {% if message is defined %}
               <a id="delete" href={{ path('delete_message', {messageid: message.id}) }}>Supprimer</a>
-            {% endif %}
-            {% if commentarys is defined %}
-              <a id="delete">Supprimer</a>
             {% endif %}
         </div>
     </div>

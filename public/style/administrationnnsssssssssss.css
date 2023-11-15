@@ -8,15 +8,17 @@
     flex-direction: row;
     width: 60%;
     height: 3rem;
-    background-color: lightgrey;
+    background-color: #609A7D;
     margin: auto;
-    margin-top: 0.2rem ;
+    margin-top: 3.5rem;
 }
 .admin_nav button {
     margin: auto 15%;
     padding: 0.6rem 3%;
     border: none;
     background-color: transparent;
+    color: #F3F3F7;
+    box-shadow: none;
 }
 /*--- TABLE HEADER---*/
 .table_header {
@@ -33,10 +35,11 @@
     height: 3rem;
     margin: auto;
     margin-top: 0.5rem; 
-    background-color: lightgrey;
+    background-color: #DC9A7D;
 }
-.table_title p {
+.table_title h2 {
     margin: auto;
+    color: #F3F3F7;
  }
 /*--- TABLE ---*/
 .users_table_content, .recipes_table_content,
@@ -49,8 +52,11 @@
     display: flex;
     width: 100%;
     flex-direction: row;
-    background-color: lightgrey;
+    background-color: #609A7D;
     margin: 1rem 0;
+}
+#cabinet_table p, #cabinet_table h2{ 
+    color: #F3F3F7;
 }
 #cabinet_info { 
     display: flex;
@@ -68,6 +74,14 @@
     width: 8rem;
     margin-right: 0.5rem;
     margin-top: 0.5rem;
+    background-color: #DC9A7D;
+    color: #F3F3F7;
+    border: none;
+}
+.new_btn button {
+    background-color: #609A7D;
+    color: #F3F3F7;
+    border: none;
 }
 
 table {
@@ -91,7 +105,63 @@ th, td {
     justify-content: end;
     padding-right: 1rem;
 }
-
+#table-btn button { 
+    background-color: #609A7D;
+    color: #F3F3F7;
+    border: none;
+}
+/*--- INFOS ---*/
+.info-content {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+}
+.info-content table { 
+    margin: 2rem 0;
+}
+.info-content table td{ 
+    font-size: 20px;
+    text-align: center;
+}
+.info-content #message-info { 
+    display: flex;
+    flex-direction: row;
+    padding-top: 0.5rem;
+    padding-left: 0.5rem;
+    background-color: #F3F3F7;
+    margin: 0.5rem 0;
+}
+.info-content #message-label { 
+    color: lightslategray;
+    margin-right: 1rem;
+}
+.info-content #message-email { 
+    margin-left: 1rem;
+    color: blueviolet;
+}
+.info-content #message-text {
+    min-height: 20rem; 
+    background-color: #F3F3F7;
+}
+.info-button {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: end;
+    margin: 0.5rem 0;
+}
+.info-button button { 
+    margin: 0 0.5rem;
+    border: none;
+    color: #F3F3F7;
+}
+.info-button .update {
+    background-color: #609A7D;
+}
+.info-button #info_delete {
+    background-color: lightcoral;
+}
 @media screen and (max-width: 900px) {
 /*--- NAVIGATION ---*/
 .admin_nav {

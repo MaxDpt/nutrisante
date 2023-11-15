@@ -4,15 +4,19 @@ namespace App\Form;
 
 use App\Entity\Recipes;
 use Symfony\Component\Form\AbstractType;
+
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RecipesType extends AbstractType
 {
@@ -30,6 +34,12 @@ class RecipesType extends AbstractType
                     new Assert\Length(['min'=> 2, 'max'=> 60])
                 ]
                 ])
+            ->add('description', TextareaType::class, [
+                'label'=> 'description',
+                'constraints'=>[
+                    new Assert\NotBlank(),
+                ]
+                ])
             ->add('prepaTime', TimeType::class, [
                 'label'=>'temp de préparation',
             ])
@@ -44,42 +54,65 @@ class RecipesType extends AbstractType
                     'class'=>'form-control'],
                 'label'=>'regime',
                 'label_attr'=>[
-                    'class'=>'form-label']
+                    'class'=>'form-label'],
+                    'entry_type'=> TextType::class,
+                    'by_reference'=>false,
+                    "allow_add"=>true,
+                    "allow_delete"=>true
             ])
             ->add('allergen', CollectionType::class, [
                 'attr'=> [
                     'class'=>'form-control'],
                 'label'=>'allergies',
                 'label_attr'=>[
-                    'class'=>'form-label']
+                    'class'=>'form-label'],
+                    'entry_type'=> TextType::class,
+                    'by_reference'=>false,
+                    "allow_add"=>true,
+                    "allow_delete"=>true,
             ])
-            ->add('description', TextareaType::class, [
-                'label'=> 'description',
-                'constraints'=>[
-                    new Assert\NotBlank(),
-                ]
-                ])
             ->add('ingredient', CollectionType::class, [
                 'attr'=> [
                     'class'=>'form-control'],
                 'label'=>'ingreditents',
                 'label_attr'=>[
-                    'class'=>'form-label']
+                    'class'=>'form-label'],
+                'entry_type'=> TextType::class,
+                'by_reference'=>false,
+                "allow_add"=>true,
+                "allow_delete"=>true
+
             ])
             ->add('stage', CollectionType::class, [
                 'attr'=> [
                     'class'=>'form-control'],
                 'label'=>'etapes',
                 'label_attr'=>[
-                    'class'=>'form-label']
+                    'class'=>'form-label'],
+                    'entry_type'=> TextareaType::class,
+                    'by_reference'=>false,
+                    "allow_add"=>true,
+                    "allow_delete"=>true
             ])
-            ->add('images', CollectionType::class, [
+            ->add('user', IntegerType::class, [
+                'attr'=> [
+                    'class'=>'form-control',
+                    'id' => 'userId',
+                    'hidden' => true],
+                'label' => 'utilisateur',
+                'label_attr' =>[
+                    'class' => 'form-label'],
+                'required' => false,
+            ])
+            ->add('imageFile', VichImageType::class, [
                 'attr'=> [
                     'class'=>'form-control'],
                 'label'=>'images',
                 'label_attr'=>[
-                    'class'=>'form-label']
+                    'class'=>'form-label'],
+                'required' => false,
             ])
+            
             ->add('submit', SubmitType::class,[
                 'attr'=>[
                     'class'=> 'btn-submit',

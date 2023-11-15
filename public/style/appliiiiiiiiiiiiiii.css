@@ -1,0 +1,389 @@
+/* ----- FONT FAMILY -----*/
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Noto+Sans&family=Reenie+Beanie&display=swap');
+/*----- GLOBAL -----*/
+body {
+    height: 100%;
+    margin: 0;
+    bottom: 0;
+    background-color: #f5ede9;
+}
+a {
+    font-family: 'Baloo Bhaijaan 2', sans-serif;
+    text-decoration: none;
+    font-size: 18px;
+}
+a:hover, button:hover {
+    cursor: pointer;
+}
+h1 {
+    font-family: 'Reenie Beanie', cursive;
+    font-size: 30px;
+}
+.title_page h1 {
+    font-size: 40px;
+    color: #609A7D;;
+}
+h2 {
+    font-family: 'Baloo Bhaijaan 2', sans-serif;
+    font-size: 20px;
+}
+button {
+    font-family: 'Baloo Bhaijaan 2', sans-serif;
+    font-size: 18px;
+    border-radius: 6px;
+}
+button:hover { 
+    box-shadow: black inset 1px 1px 4px 0.2px;
+}
+p {
+    color: #0C0920;
+    font-family: 'Noto Sans', sans-serif;
+}
+/*----- CONFIRMATION -----*/
+.confirm_content, .confirm_commentary_content {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 70%)
+}
+.confirm_popUp {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20% auto;
+    height: 20%;
+    min-height: 10rem;
+    max-height: 20rem;
+    width: 40%;
+    min-width: 20rem;
+    max-width: 40rem;
+    background-color: white;
+}
+.confirm_btn, .confirm_commentary_btn, .confirm_popUp p  {
+    margin: auto;
+}
+
+/*----- FORMULARY -----*/
+.form_content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+    margin-top: 3.5rem;
+}
+.form_content h1 { 
+    width: 60%;
+    margin: auto;
+    text-align: center;
+    background-color: #DC9A7D;
+    color: #F3F3F7;
+}
+.form_content .error-flash {
+    margin: auto;
+    width: 60%;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: lightcoral;
+}
+.form_content form {
+    display: flex;
+    flex-direction: column;
+}
+.form-group, #users_plainPassword div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#users_birth, #users_update_birth { 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#users_diet, #users_allergen, #users_update_diet, #users_update_allergen {
+    width: 80%;
+    margin: auto;
+    justify-content: center;
+}
+#users_diet div, #users_allergen div, #users_update_diet div, #users_update_allergen div{ 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.form_content form input{
+    width: 40%;
+    max-width: 30rem;
+    min-width: 20rem;
+    margin: auto;
+    height: 2rem;
+    border-radius: 5px;
+    border: none;
+    box-shadow: inset 1px 1px 4px 0.2px;
+    padding: 0 0.5rem;
+}
+.form_content form textarea { 
+    width: 60%;
+    max-width: 40rem;
+    min-width: 30rem;
+    margin: 1rem auto;
+    height: 8rem;
+    min-height: 8rem;
+    max-height: 8rem;
+    border-radius: 5px;
+    border: none;
+    box-shadow: inset 1px 1px 4px 0.2px;
+    padding: 0 0.5rem;
+    overflow-y: scroll;
+}
+.form_content form #recipes_prepaTime, 
+.form_content form #recipes_cookingTime,
+.form_content form #recipes_restTime   {
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    margin: auto;
+}
+.form_content form #recipes_prepaTime select, 
+.form_content form #recipes_cookingTime select,
+.form_content form #recipes_restTime select {
+    width: 20%;
+}
+
+.form_content form label { 
+    width: 60%;
+    max-width: 40rem;
+    min-width: 30rem;
+    margin: 0.5rem auto;
+    margin-top: 1rem;
+    font-family: 'Baloo Bhaijaan 2', sans-serif;
+    font-size: 24px;
+    background-color: #e2cac0;
+    color: #F3F3F7;
+    padding: 0 0.5rem;
+    text-align: center;
+}
+
+.form-group-submit div {
+    display: flex;
+    justify-content: center;
+}
+.form_content form button {
+    width: 30%;
+    max-width: 15rem;
+    min-width: 10rem;
+    height: 2rem;
+    border-radius: 5px;
+    border: none;
+    margin: 1rem auto;
+} 
+.form_content form button:hover { 
+    box-shadow: inset 1px 1px 4px 0.2px;
+}
+form #users_diet, form #users_allergen,
+form #recipes_diet, form #recipes_allergen, 
+form #recipes_ingredient, form #recipes_stage {
+    background-color: transparent;
+    border: none;
+}
+
+form #users_diet div, form #users_allergen div, 
+form #recipes_diet div, form #recipes_allergen div, 
+form #recipes_ingredient div, form #recipes_stage div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 60%;
+    margin: 1rem auto;
+}
+form #users_diet div label, form #users_allergen div label,
+form #recipes_diet div label, form #recipes_allergen div label, 
+form #recipes_ingredient div label, form #recipes_stage div label {
+    width: 3rem;
+    max-width: 3rem;
+    min-width: 3rem;
+    margin: auto 0.5rem;
+    font-size: 20px;
+    background-color: transparent;
+    color: #0C0920;
+    padding: 0;
+}
+form #users_diet div input, form #users_allergen div input, 
+form #recipes_diet div input, form #recipes_allergen div input, 
+form #recipes_ingredient div input, form #recipes_stage div input {
+    width: 50%;
+    max-width: 35rem;
+    min-width: 25rem;
+    margin: auto 0;
+}
+#recipes_stage div textarea {
+    width: 50%;
+    max-width: 35rem;
+    min-width: 25rem;
+    margin: auto 0;
+}
+.items_btn {
+    display: flex;
+    flex-direction: row-reverse;
+    width: 60%;
+    margin: auto;
+    justify-content: center;
+}
+.items_btn .new-item{
+    background-color: #609A7D;
+    color: #F3F3F7;
+}
+.items_btn .delete-item{
+    background-color: rgb(229, 132, 132);
+    color: #F3F3F7;
+}
+
+.result_search_content {
+    display: flex;
+    flex-direction: column;
+    width: 38%;
+    max-width: 40rem;
+    min-width: 30rem;
+    margin: 0 auto;
+    box-shadow: 1px 1px 4px 0.2px;
+}
+.itemSearch {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 40rem;
+    min-width: 30rem;
+    margin: 0 auto;
+    background-color: #F3F3F7;
+    border-bottom: 2px solid #DC9A7D;
+}
+.itemSearch:hover { 
+    background-color: #DC9A7D;
+    color: #F3F3F7;
+    cursor: pointer;
+}
+.itemSearch p { 
+    margin: 0.5rem;
+}
+
+form .btn-submit  {
+    background-color: #DC9A7D;
+    color: #F3F3F7;
+}
+form .vich-image div {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin: 1rem auto;
+}
+form .vich-image div label {
+    width: 5rem;
+    max-width: 5rem;
+    min-width: 5rem;
+    margin: 0;
+}
+form .vich-image div input { 
+    width: auto;
+    max-width: auto;
+    min-width: 2.5rem;
+    margin: 0;
+    box-shadow: none;
+}
+form .vich-image, form .vich-image a {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+form .vich-image img {
+    margin: auto;
+    width: 500px;
+    height: auto;
+}
+
+@media screen and (max-width: 900px) {
+a {
+    font-size: 18px;
+}
+h1 {
+    font-size: 18px;
+}
+.title_page h1 {
+    font-size: 28px;
+}
+h2 {
+    font-size: 16px;
+}  
+p {
+    font-size: 14px;
+}
+button {
+    font-size: 12px;
+}
+/*----- CONFIRMATION -----*/
+.confirm_popUp {
+    margin: 40% auto;
+}
+
+/*---- FORMULARY ----*/
+.form_content {
+    width: 100%;
+}
+.form_content h1 { 
+    width: 100%;
+}
+.form_content form input, .form_content form textarea {
+    width: 90%;
+    max-width: auto;
+    min-width: auto;
+}
+.form_content form #recipes_prepaTime select, 
+.form_content form #recipes_cookingTime select,
+.form_content form #recipes_restTime select {
+    width: 40%;
+}
+.form_content form label { 
+    width: 90%;
+    max-width: auto;
+    min-width: auto;
+    font-size: 22px;
+}
+.form_content form button {
+    width: 40%;
+    max-width: auto;
+    min-width: auto;
+} 
+#users_diet, #users_allergen, #users_update_diet, #users_update_allergen {
+    width: 100%;
+}
+form #recipes_diet div, form #recipes_allergen div, 
+form #recipes_ingredient div, form #recipes_stage div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin: auto;
+}
+form #recipes_diet div label, form #recipes_allergen div label, 
+form #recipes_ingredient div label, form #recipes_stage div label {
+    width: 3rem;
+    max-width: 3rem;
+    min-width: 3rem;
+    margin: 0.5rem;
+}
+form #recipes_diet div input, form #recipes_allergen div input, 
+form #recipes_ingredient div input, form #recipes_stage div input {
+    width: 80%;
+    max-width: 80%;
+    min-width: 80%;
+}
+form .vich-image img {
+    margin: auto;
+    width: 80%;
+    height: auto;
+}
+    }

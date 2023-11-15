@@ -25,9 +25,17 @@ class RecipesRepository extends ServiceEntityRepository
 /**
 * @return Recipes[] Returns an array of Recipes objects
 */
-public function findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet = null, $allergen = null, $search = null )
+public function findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet = null, $allergen = null, $search = null, $userId = null )
 {
     $query = $this->createQueryBuilder('r');
+    if ($userId === null) {
+        $query
+        ->andWhere("r.user is NULL ");
+    }
+    if ($userId !== null) {
+        $query
+        ->andWhere("r.user = '{$userId}' ");
+    }
     if ($search !== null) {
         $query
         ->andWhere("r.name LIKE '%{$search}%' ");
@@ -53,9 +61,17 @@ public function findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet = nul
 /**
 * @return Count Returns total number of Recipes
 */
-public function getTotalRecipes($diet = null, $allergen = null, $search = null)
+public function getTotalRecipes($diet = null, $allergen = null, $search = null, $userId = '')
 {
    $query = $this->createQueryBuilder('r');
+   if ($userId === null) {
+    $query
+    ->andWhere("r.user is NULL ");
+    }
+    if ($userId !== null) {
+        $query
+        ->andWhere("r.user = '{$userId}' ");
+    }
    if ($search !== null) {
     $query
     ->andWhere("r.name LIKE '%{$search}%' ");

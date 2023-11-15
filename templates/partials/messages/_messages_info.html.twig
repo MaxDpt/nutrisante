@@ -5,8 +5,12 @@
 
 <table class="table table-hover">
   <tbody>
+      <div id="message-info"><p id="message-label">de :</p> <p>[ {{message.name}} {{message.lastname}} ]</p> <p id="message-email"> {{message.email}}</p> </div>
+      <div id="message-info"><p id="message-label">sujet:</p> <p>{{message.subject}} </div>
+      <div id="message-info"><p id="message-label">date :</p> <p>{{message.createdAt|date('d/m/y')}} </div>
+
     <tr>
-      <td>nom : {{message.name}} </td>
+      <td id="message-text">{{message.text}} </td>
     </tr>
   </tbody>
 </table>

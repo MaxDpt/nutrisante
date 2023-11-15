@@ -25,6 +25,7 @@ class CommentaryController extends AbstractController
             $commentarys = $commentaryRepository->findPaginatedCommentaryByRecipe( $commentarysLimit, $recipeId);
             return new JsonResponse([
                 'content' => $this->renderView('partials/commentary/_commentary_list.html.twig', [
+                    'userConnected'=>$this->getUser(),
                     'commentarys'=>$commentarys,
                 ])
             ]);
@@ -59,6 +60,7 @@ class CommentaryController extends AbstractController
 
             return new JsonResponse([
                 'content' => $this->renderView('partials/commentary/_commentary_list.html.twig', [
+                    'userConnected'=>$this->getUser(),
                     'commentarys'=>$commentarys,
                 ])
             ]); 
@@ -84,6 +86,7 @@ class CommentaryController extends AbstractController
 
         return new JsonResponse([
             'content' => $this->renderView('partials/commentary/_commentary_list.html.twig', [
+                'userConnected'=>$this->getUser(),
                 'commentarys'=>$commentarys,
             ])
         ]); 

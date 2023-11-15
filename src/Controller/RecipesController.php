@@ -8,6 +8,7 @@ use App\Form\CommentaryType;
 use App\Form\RecipesType;
 use App\Repository\CommentaryRepository;
 use App\Repository\RecipesRepository;
+use App\Service\PictureService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,39 +18,53 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RecipesController extends AbstractController
 {
-    #[Route('/recipes', name: 'get_recipes')]
-    public function getRecipe(Request $request, RecipesRepository $recipesRepository, CommentaryRepository $commentaryRepository): Response
+    #[Route('/recipes', name: 'get_recipes', methods: ['GET'])]
+    public function getRecipe(Request $request, RecipesRepository $recipesRepository, 
+                              CommentaryRepository $commentaryRepository): Response
     {
-        $recipeId = $request->get('recipeid');
-        $commentarysLimit = $request->get('commentaryLimit') ? $request->get('commentaryLimit') : 4;
-        $commentarys = $commentaryRepository->findPaginatedCommentaryByRecipe( $commentarysLimit, $recipeId);
-        // --> form view
-        $commentary = new Commentary();
-        $form = $this->createForm(CommentaryType::class, $commentary);
-
         // --> ajax RECETTE INFO
         if($request->get('ajax') && $request->get('recipeid')) {
+            $recipeId = $request->get('recipeid');
+            // --> commentarys data
+            $commentarysLimit = $request->get('commentaryLimit') ? $request->get('commentaryLimit') : 4;
+            $commentarys = $commentaryRepository->findPaginatedCommentaryByRecipe( $commentarysLimit, $recipeId);
+            // --> commentary form view
+            $commentary = new Commentary();
+            $form = $this->createForm(CommentaryType::class, $commentary);
+            // --> recette
             $recipe = $recipesRepository->findOneBy(['id' => $request->get('recipeid')]);
-            return new JsonResponse([
-                'content' => $this->renderView('partials/recipes/_recipe_info.html.twig', [
-                    'commentarys'=>$commentarys,
-                    'recipe'=>$recipe,
-                    'form'=>$form->createView()
-                ])
-            ]);
+            if ($this->getUser() && $this->getUser()->roles[0] == 'ROLE_ADMINISTRATOR') {
+                return new JsonResponse([
+                    'content' => $this->renderView('partials/recipes/_recipe_info_admin.html.twig', [
+                        'userConnected'=>$this->getUser(),
+                        'commentarys'=>$commentarys,
+                        'recipe'=>$recipe,
+                        'form'=>$form->createView()
+                    ])
+                ]); 
+            } else {
+                return new JsonResponse([
+                    'content' => $this->renderView('partials/recipes/_recipe_info.html.twig', [
+                        'userConnected'=>$this->getUser(),
+                        'commentarys'=>$commentarys,
+                        'recipe'=>$recipe,
+                        'form'=>$form->createView()
+                    ])
+                ]); 
+            }
         }
-
         return $this->render('recipes/index.html.twig', [
         ]);
     }
     #[Route('/recipes/set', name: 'set_recipes', methods: ['GET', 'POST'])]
-    public function setRecipe(Request $request, EntityManagerInterface $manager): Response
+    public function setRecipe(Request $request, EntityManagerInterface $manager, PictureService $pictureService): Response
     {
         $recipe = new Recipes();
         $recipe->setScore(0);
         $form = $this->createForm(RecipesType::class, $recipe);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if($form->isSubmitted()) {
+
             $recipe = $form->getData();
             $this->addFlash(
                 'success',
@@ -83,6 +98,7 @@ class RecipesController extends AbstractController
         $form = $this->createForm(RecipesType::class, $recipe);
         $form->handleRequest($request);
         if($form->isSubmitted()) {
+
             $recipe = $form->getData();
             $this->addFlash(
                 'success',

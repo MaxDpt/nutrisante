@@ -51,6 +51,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $query->getQuery()->getResult();
     }
 
+     /**
+     * @return Users[] Returns an array of Users objects
+     */
+    public function findAllUsersSearch($userSearch = null)
+    {
+        $query = $this->createQueryBuilder('u');
+            $query->orderBy('u.id', 'DESC')
+            ->andWhere("u.name LIKE '%{$userSearch}%' ")
+            ->andWhere("u.lastname LIKE '%{$userSearch}%' ")
+            ->setMaxResults(6)
+        ;
+        return $query->getQuery()->getResult();
+    }
+
     /**
      * @return Count Returns total number of Users 
      */

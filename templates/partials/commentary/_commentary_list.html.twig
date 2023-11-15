@@ -3,7 +3,7 @@
     <div class="commentary_header">
         <div class="commentary_header_left">
             <div class="commentary_name">
-                <p>{{commentary.name}}</p>
+                <h2>{{commentary.name}}</h2>
             </div>
             <div class="commentary_score">
             {% for i in 1..5 %}
@@ -26,6 +26,7 @@
         <div class="commentary_header_right">
             <div class="commentary_date">
                 <p>{{commentary.createdAt|date('d/m/y')}}</p>
+                {% if userConnected and userConnected.roles[0] == 'ROLE_ADMINISTRATOR' %}
                 <div class="commentary_delete">
                     <button value="{{commentary.id}}">
                     <svg id="icon_delete" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -33,6 +34,7 @@
                     </svg>
                     </button>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -42,6 +44,3 @@
     </div>
 </div>
 {% endfor %}
-<div class="commentary_load">
-    <a>Charger plus</a>
-</div>

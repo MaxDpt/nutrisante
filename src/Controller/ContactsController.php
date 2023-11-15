@@ -22,6 +22,7 @@ public function getOneMessage(Request $request, ContactRepository $contactReposi
         $message = $contactRepository->findOneBy(['id' => $request->get('messageid')]);
         return new JsonResponse([
             'content' => $this->renderView('partials/messages/_messages_info.html.twig', [
+                'userConnected' => $this->getUser(),
                 'message'=>$message
             ])
         ]);
@@ -47,6 +48,7 @@ public function setUser(Request $request, EntityManagerInterface $manager): Resp
     }
 
     return $this->render('pages/contact_page.html.twig', [
+        'userConnected' => $this->getUser(),
         'form'=>$form->createView()
     ]);
 }

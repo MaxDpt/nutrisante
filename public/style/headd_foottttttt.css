@@ -5,7 +5,9 @@ header {
     justify-content: space-between;
     width: 100%;
     height: 3rem;
-    background-color: lightgrey;
+    background-color: #609A7D;
+    position: fixed;
+    top: 0;
 }
 .header_left {
     display: flex;
@@ -24,10 +26,11 @@ header {
     flex-direction: row;
     width: 70%;
 }
-header h2 {
+header h1 {
     margin: auto 5%;
     width: 30%;
-    font-size: 20px;
+    font-size: 30px;
+    color: #F3F3F7;
 }
 header a {
     margin: auto 5%;
@@ -36,6 +39,12 @@ header a {
 #icon_header {
     width: 2rem;
     height: 2rem;
+    color: #F3F3F7;
+}
+#icon_header_logout {
+    width: 2rem;
+    height: 2rem;
+    color: rgb(229, 132, 132);
 }
 
 /*--- FOOTER ---*/
@@ -43,10 +52,12 @@ footer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    position: fixed;
     width: 100%;
     height: 5rem;
-    background-color: lightgrey;
+    background-color: #609A7D;
     bottom: 0;
+    margin: 0;
 }
 .footer_left {
     display: flex;
@@ -62,10 +73,17 @@ footer {
 }
 footer a {
     margin: auto;
+    color: #F3F3F7;
 }
 
 @media screen and (max-width: 900px) {
 /*--- HEADER ---*/
+    header h1 {
+        margin: auto 5%;
+        width: 30%;
+        font-size: 16px;
+        color: #F3F3F7;
+    }
     header h2 {
         font-size: 12px;
     }

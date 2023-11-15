@@ -1,0 +1,6 @@
+{% for user in users %}
+    <a class="itemSearch" name={{user.id}} id="{{ user.name }} {{ user.lastname }}">
+        <p>{{ user.name }}</p>
+        <p>{{ user.lastname }}</p>
+    </a>
+{% endfor %}

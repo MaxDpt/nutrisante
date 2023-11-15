@@ -5,17 +5,31 @@
 
 <div class="filter_search_content">
 <div class="search">
-  <p><input id="search_input" name="search_input" placeholder="saisir une recherche">
-  <button id="search_btn">rechercher</button></p>
+  <input id="search_input" name="search_input" placeholder="saisir une recherche">
+  <button id="search_btn">rechercher</button>
 </div>
 
 <div class="filters">
   <form class="users-filters">
+  {% if userConnected and userConnected.roles[0] != 'ROLE_ADMINISTRATOR' %}
+    <p><input id="diet_filter" type="checkbox" name="diet_filter" value="true" checked>
+    <label for="diet_filter">mes regimes</label></p>
+
+    <p><input id="allergen_filter" type="checkbox" name="allergen_filter" value="true" checked>
+    <label for="allergen_filter">mes allergenes</label></p>
+
+    <p><input id="recette_filter" type="checkbox" name="recette_filter" value="true" checked>
+    <label for="allergen_filter">mes recettes</label></p>
+  {% else %}
     <p><input id="diet_filter" type="checkbox" name="diet_filter" value="true">
     <label for="diet_filter">mes regimes</label></p>
 
     <p><input id="allergen_filter" type="checkbox" name="allergen_filter" value="true">
     <label for="allergen_filter">mes allergenes</label></p>
+
+    <p><input id="recette_filter" type="checkbox" name="recette_filter" value="true">
+    <label for="allergen_filter">mes recettes</label></p>
+  {% endif %}
   </form>
 </div>
 </div>

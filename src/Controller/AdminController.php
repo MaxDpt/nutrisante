@@ -52,6 +52,7 @@ class AdminController extends AbstractController
         if($request->get('ajax') && $request->get('window') == 'gestion') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/admin/_gestion_page.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
@@ -69,6 +70,7 @@ class AdminController extends AbstractController
         if($request->get('ajax') && $request->get('window') == 'messages') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/admin/_messages_page.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'messages' => $messages,
                     'totalmessages' => $totalmessages,
                     'messagesLimit' => $messagesLimit,
@@ -83,6 +85,7 @@ class AdminController extends AbstractController
                 'totalUsers' => $totalUsers,
                 'usersLimit' => $usersLimit,
                 'content' => $this->renderView('partials/users/_users_table.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
@@ -102,6 +105,7 @@ class AdminController extends AbstractController
                 'totalRecipes' => $totalRecipes,
                 'recipesLimit' => $recipesLimit,
                 'content' => $this->renderView('partials/recipes/_recipes_table.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
@@ -121,6 +125,7 @@ class AdminController extends AbstractController
                 'totalservices' => $totalservices,
                 'servicesLimit' => $servicesLimit,
                 'content' => $this->renderView('partials/services/_services_table.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'cabinet' => $cabinet,
                     'users' => $users,
                     'totalUsers' => $totalUsers,
@@ -140,6 +145,7 @@ class AdminController extends AbstractController
                 'totalmessages' => $totalmessages,
                 'messagesLimit' => $messagesLimit,
                 'content' => $this->renderView('partials/messages/_messages_table.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'messages' => $messages,
                     'totalmessages' => $totalmessages,
                     'messagesLimit' => $messagesLimit,
@@ -148,6 +154,7 @@ class AdminController extends AbstractController
         }
 
         return $this->render('pages/admin_page.html.twig', [
+            'userConnected' => $this->getUser(),
             'cabinet' => $cabinet,
             'users' => $users,
             'totalUsers' => $totalUsers,

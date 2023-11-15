@@ -1,0 +1,14 @@
+<div class="confirm_commentary_content" hidden>
+    <div class="confirm_popUp">
+        {% if commentarys is defined %}
+          <p>Voulez-vous supprimer le commentaire ?</p>
+        {% endif %}
+
+        <div class="confirm_commentary_btn">
+            <a id="cancel">Annuler</a>
+            {% if commentarys is defined %}
+              <a id="delete">Supprimer</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

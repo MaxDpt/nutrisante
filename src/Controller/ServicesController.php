@@ -86,7 +86,8 @@ public function updateUser(Request $request, ServicesRepository $servicesReposit
     ]);
 }
 #[Route('/service/delete/{serviceid}', name: 'delete_service')]
-public function deleteUser(ServicesRepository $servicesRepository, int $serviceid, EntityManagerInterface $manager): Response
+public function deleteUser(ServicesRepository $servicesRepository, int $serviceid, 
+                           EntityManagerInterface $manager): Response
 {
     $service = $servicesRepository->findOneBy(["id" => $serviceid]);
     $manager->remove($service);

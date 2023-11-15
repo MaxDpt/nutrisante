@@ -51,14 +51,22 @@ class UsersUpdateType extends AbstractType
                 'class'=>'form-control'],
             'label'=>'regime',
             'label_attr'=>[
-                'class'=>'form-label']
+                'class'=>'form-label'],
+                'entry_type'=> TextType::class,
+                'by_reference'=>false,
+                "allow_add"=>true,
+                "allow_delete"=>true
         ])
         ->add('allergen', CollectionType::class, [
             'attr'=> [
                 'class'=>'form-control'],
             'label'=>'allergies',
             'label_attr'=>[
-                'class'=>'form-label']
+                'class'=>'form-label'],
+                'entry_type'=> TextType::class,
+                'by_reference'=>false,
+                "allow_add"=>true,
+                "allow_delete"=>true,
         ])
         ->add('email', EmailType::class, [
             'attr'=>[

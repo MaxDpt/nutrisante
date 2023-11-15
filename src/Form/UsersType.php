@@ -26,6 +26,7 @@ class UsersType extends AbstractType
                 'attr'=>[
                     'minlength'=>'2',
                     'maxlength'=>'60',
+                    'placeholder'=>'Entrez un nom',
                 ],
                 'label'=> 'Nom',
                 'constraints'=>[
@@ -37,6 +38,7 @@ class UsersType extends AbstractType
                 'attr'=>[
                     'minlength'=>'2',
                     'maxlength'=>'60',
+                    'placeholder'=>'Entrez un Prenom',
                 ],
                 'label'=> 'Prenom',
                 'constraints'=>[
@@ -53,13 +55,15 @@ class UsersType extends AbstractType
                     'label'=>'Mot de passe',
                     'attr'=>[
                         'minlength'=>'2',
-                        'maxlength'=>'60',],
+                        'maxlength'=>'60',
+                        'placeholder'=>'Entrez un mot de passe',],
                 ],
                 'second_options'=>[
                     'label'=>'Confirmation du mot de passe',
                     'attr'=>[
                         'minlength'=>'2',
-                        'maxlength'=>'60',],
+                        'maxlength'=>'60',
+                        'placeholder'=>'Confirmer le mot de passe'],
                 ],
                 'invalid_message'=> 'Les mots de passe ne correspondent pas.'
                 
@@ -67,7 +71,8 @@ class UsersType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr'=>[
                     'minlength'=>'2',
-                    'maxlength'=>'180',],
+                    'maxlength'=>'180',
+                    'placeholder'=>'Entrez une address email'],
                 'label'=>'Adresse email',
                 'constraints'=>[
                     new Assert\NotBlank(),
@@ -80,14 +85,22 @@ class UsersType extends AbstractType
                     'class'=>'form-control'],
                 'label'=>'regime',
                 'label_attr'=>[
-                    'class'=>'form-label']
+                    'class'=>'form-label'],
+                    'entry_type'=> TextType::class,
+                    'by_reference'=>false,
+                    "allow_add"=>true,
+                    "allow_delete"=>true
             ])
             ->add('allergen', CollectionType::class, [
                 'attr'=> [
                     'class'=>'form-control'],
                 'label'=>'allergies',
                 'label_attr'=>[
-                    'class'=>'form-label']
+                    'class'=>'form-label'],
+                    'entry_type'=> TextType::class,
+                    'by_reference'=>false,
+                    "allow_add"=>true,
+                    "allow_delete"=>true,
             ])
 
             ->add('submit', SubmitType::class,[

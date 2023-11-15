@@ -1,4 +1,9 @@
 <div class="recipe_info_content">
+  <div class="info-button">
+  {# ------ BOUTONS ------#}
+    <button class="update" id="info_update_recipe" value={{recipe.id}}>Modifier</button>
+    <button id="info_delete" value={{recipe.id}}>Supprimer</button>
+  </div>
   {# ------ NOM ------#}
   <div class="recipe_header_name">
     <h2>{{recipe.name}}</h2>
@@ -74,16 +79,12 @@
     <div class="commentary_list_header">
       <h2>COMMENTAIRE</h2>
     </div>
-    <div class="commentary_list_content" id="commentary_list_user">
+    <div class="commentary_list_content" id="commentary_list_admin">
       {% include "partials/commentary/_commentary_list.html.twig" %}
     </div>
     <div class="commentary_load">
       <a>Charger plus</a>
     </div>
-    <div class="commentary_form_content">
-      {% include "partials/commentary/_commentary_form.html.twig" %}
-    </div>
-
   </div>
   
 </div>

@@ -7,10 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RecipesRepository::class)]
+#[Vich\Uploadable]
 class Recipes
 {
     #[ORM\Id]
@@ -56,12 +60,21 @@ class Recipes
     #[Assert\Positive()]
     private ?int $score = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private ?array $images = null;
+
+    #[Vich\UploadableField(mapping: "recipe_images", fileNameProperty: "imageName")]
+    private ?File $imageFile = null;
+
+    
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
 
     #[ORM\Column]
     #[Assert\NotNull()]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\Positive()]
+    private ?int $user = null;
 
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Commentary::class, orphanRemoval: true)]
     private Collection $commentaries;
@@ -197,16 +210,28 @@ class Recipes
         return $this;
     }
 
-    public function getImages(): ?array
+    public function setImageFile(?File $imageFile = null): void
     {
-        return $this->images;
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->createdAt = new \DateTimeImmutable();
+        }
     }
 
-    public function setImages(?array $images): static
+    public function getImageFile(): ?File
     {
-        $this->images = $images;
+        return $this->imageFile;
+    }
 
-        return $this;
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
@@ -217,6 +242,18 @@ class Recipes
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUser(): ?int
+    {
+        return $this->user;
+    }
+
+    public function setUser(?int $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -19,7 +19,7 @@ class CabinetController extends AbstractController
     {
         // --> ajax MESSAGES
         if($request->get('ajax') && $request->get('cabinetid')) {
-            $cabinet = $cabinetRepository->findOneBy(['id' => $request->get('cabinetid')]);
+            $cabinet = $cabinetRepository->findAll();
             return new JsonResponse([
                 'content' => $this->renderView('partials/cabinet/_cabinet_info.html.twig', [
                     'cabinet'=>$cabinet
@@ -33,7 +33,7 @@ class CabinetController extends AbstractController
     #[Route('/cabinet/update', name: 'update_cabinet', methods: ['GET', 'POST'])]
     public function updateUser(Request $request, CabinetRepository $cabinetRepository, EntityManagerInterface $manager): Response
     {
-        $cabinet = $cabinetRepository->findOneBy(['id' => $request->get('cabinetid')]);
+        $cabinet = $cabinetRepository->findAll()[0];
         $form = $this->createForm(CabinetType::class, $cabinet);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {

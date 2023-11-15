@@ -21,20 +21,31 @@ class HomeController extends AbstractController
                           CabinetRepository $cabinetRepository): Response
     {
         $user = $this->getUser();
-        $diet = null;
-        $allergen = null;
-        if ($user && $request->get('diet_filter')) { 
-                $diet = $user->diet;
+        $diet = $user && $user->roles[0] !== 'ROLE_ADMINISTRATOR' ? $user->diet : null;
+        $allergen = $user && $user->roles[0] !== 'ROLE_ADMINISTRATOR' ? $user->allergen : null;
+        $userId = $user && $user->roles[0] !== 'ROLE_ADMINISTRATOR' ? $user->id : null;
+
+        if ($user && $request->get('diet_filter') === 'false') { 
+            $diet = null;
         }
-        if ($user && $request->get('allergen_filter')) { 
-                $allergen = $user->allergen; 
+        if ($user && $request->get('allergen_filter') === 'false') { 
+            $allergen = null; 
         }
-        $search = $request->get('search') ? $request->get('search') : null;
+        if ($user && $request->get('recette_filter') === 'false') { 
+            $userId = null; 
+        }
+        if ($user && $request->get('filters') === 'null') { 
+            $diet = null;
+            $allergen = null; 
+            $userId = null; 
+        }
+
+        $search = $request->get('search') && $request->get('search') !== 'null' ? $request->get('search') : null;
         /* --- RECIPES --- */
         $recipesLimit = 8;
         $recipesPage = $request->get("recipesListPage") ? $request->get("recipesListPage") : 1;
-        $recipes = $recipesRepository->findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet, $allergen, $search);
-        $totalRecipes = $recipesRepository->getTotalRecipes($diet, $allergen, $search);
+        $recipes = $recipesRepository->findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet, $allergen, $search, $userId);
+        $totalRecipes = $recipesRepository->getTotalRecipes($diet, $allergen, $search, $userId);
         /* --- SERVICES --- */
         $servicesLimit = 4;
         $servicesPage = $request->get("servicesListPage") ? $request->get("servicesListPage") : 1;
@@ -48,6 +59,7 @@ class HomeController extends AbstractController
         if($request->get('ajax') && $request->get('window') == 'recipe') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/home/_recettes_page.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'recipes' => $recipes,
                     'totalRecipes' => $totalRecipes,
                     'recipesLimit' => $recipesLimit,
@@ -58,6 +70,7 @@ class HomeController extends AbstractController
         if($request->get('ajax') && $request->get('window') == 'service') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/home/_services_page.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'services' => $services,
                     'totalservices' => $totalservices,
                     'servicesLimit' => $servicesLimit,
@@ -68,6 +81,7 @@ class HomeController extends AbstractController
         if($request->get('ajax') && $request->get('window') == 'info') {
             return new JsonResponse([
                 'content' => $this->renderView('partials/home/_infos_page.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'cabinet'=> $cabinet
                 ])
             ]);
@@ -80,6 +94,7 @@ class HomeController extends AbstractController
                 'totalRecipes' => $totalRecipes,
                 'recipesLimit' => $recipesLimit,
                 'content' => $this->renderView('partials/recipes/_recipes_list.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'recipes' => $recipes,
                     'totalRecipes' => $totalRecipes,
                     'recipesLimit' => $recipesLimit,
@@ -92,6 +107,7 @@ class HomeController extends AbstractController
                 'totalservices' => $totalservices,
                 'servicesLimit' => $servicesLimit,
                 'content' => $this->renderView('partials/services/_services_list.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'services' => $services,
                     'totalservices' => $totalservices,
                     'servicesLimit' => $servicesLimit,
@@ -100,11 +116,13 @@ class HomeController extends AbstractController
         }
         /* ---------- FILTRAGE ---------- */
         if($request->get('ajax') && $request->get('diet_filter') || 
-           $request->get('ajax') && $request->get('allergen_filter')) {
+           $request->get('ajax') && $request->get('allergen_filter') || 
+           $request->get('ajax') && $request->get('recette_filter')) {
             return new JsonResponse([
                 'totalRecipes' => $totalRecipes,
                 'recipesLimit' => $recipesLimit,
                 'content' => $this->renderView('partials/recipes/_recipes_list.html.twig', [
+                    'userConnected' => $this->getUser(),
                     'recipes' => $recipes,
                     'totalRecipes' => $totalRecipes,
                     'recipesLimit' => $recipesLimit,
@@ -116,6 +134,7 @@ class HomeController extends AbstractController
             'totalRecipes' => $totalRecipes,
             'recipesLimit' => $recipesLimit,
              'content' => $this->renderView('partials/recipes/_recipes_list.html.twig', [
+                'userConnected' => $this->getUser(),
                  'recipes' => $recipes,
                  'totalRecipes' => $totalRecipes,
                  'recipesLimit' => $recipesLimit,
@@ -128,6 +147,7 @@ class HomeController extends AbstractController
              'totalRecipes' => $totalRecipes,
              'recipesLimit' => $recipesLimit,
              'content' => $this->renderView('partials/recipes/_recipes_list.html.twig', [
+                'userConnected' => $this->getUser(),
                  'recipes' => $recipes,
                  'totalRecipes' => $totalRecipes,
                  'recipesLimit' => $recipesLimit,
@@ -137,6 +157,7 @@ class HomeController extends AbstractController
 
         // --> HOME PAGE
         return $this->render('pages/home_page.html.twig', [
+            'userConnected' => $this->getUser(),
             'recipes' => $recipes,
             'totalRecipes' => $totalRecipes,
             'recipesLimit' => $recipesLimit,

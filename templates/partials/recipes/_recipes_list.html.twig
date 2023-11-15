@@ -1,8 +1,11 @@
 {% if not recipes is same as([]) %}
 {% for recipes in recipes %}
     <div class="recipe_content">
-        <div class="recipe_header">
-            <p>{{recipes.name}}</p>
+        <div class="recipe_image">
+            <img src="{{ asset('images/recette/'~recipes.imagename|e) }}"></img>
+        </div>
+        <div class="recipe_header_name">
+            <h2>{{recipes.name}}</h2>
         </div>
         <div class="recipe_time">
             <p>
@@ -29,11 +32,13 @@
             </p>
         </div>
         <div class="recipe_diet">
+        <label> regime(s) : </label>
         {% for diet in recipes.diet %}
             <p>{{diet}}</p>
         {% endfor %}
         </div>
         <div class="recipe_allergen">
+        <label> allergene(s) : </label>
         {% for allergen in recipes.allergen %}
             <p>{{allergen}}</p>
         {% endfor %}

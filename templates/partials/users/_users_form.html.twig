@@ -48,6 +48,10 @@
         <div class="form_error">
             {{ form_errors(form) }}
         </div>
+        <div class="items_btn">
+            <button type="button" class="new-item" value="diet">ajouter</button>
+            <button type="button" class="delete-item" value="diet">Supprimer</button>
+        </div>
     </div>
 
     <div class="form-group">
@@ -55,6 +59,10 @@
         {{ form_widget(form.allergen) }}
         <div class="form_error">
             {{ form_errors(form) }}
+        </div>
+        <div class="items_btn">
+            <button type="button" class="new-item" value="allergen">ajouter</button>
+            <button type="button" class="delete-item" value="allergen">Supprimer</button>
         </div>
     </div>
 

@@ -31,6 +31,31 @@ class UsersController extends AbstractController
         return $this->render('users/index.html.twig', [
         ]);
     }
+    #[Route('/users/search', name: 'get_user_search')]
+    public function getUsersSearch(Request $request, UserRepository $userRepository): Response
+    {
+        // --> ajax MESSAGES
+        if($request->get('ajax') && $request->get('userSearch')) {
+            $userSearch = $request->get('userSearch');
+            $users = $userRepository->findAllUsersSearch($userSearch);
+            return new JsonResponse([
+                'content' => $this->renderView('partials/recipes/partials/_itemResult_Search.html.twig', [
+                    'users'=>$users
+                ])
+            ]);
+        } 
+        if ($request->get('ajax') && !$request->get('userSearch')){
+            $users = null;
+            return new JsonResponse([
+                'content' => $this->renderView('partials/recipes/partials/_itemResult_Search.html.twig', [
+                    'users'=>$users
+                ])
+            ]);
+        }
+
+        return $this->render('users/index.html.twig', [
+        ]);
+    }
     #[Route('/user/set', name: 'set_user', methods: ['GET', 'POST'])]
     public function setUser(Request $request, EntityManagerInterface $manager): Response
     {

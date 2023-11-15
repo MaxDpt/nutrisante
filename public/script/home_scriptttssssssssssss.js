@@ -1,5 +1,5 @@
+
 window.onload = () => {
-    console.log('hello');
     navMenu();
     ListPage();
     GetClass();
@@ -10,7 +10,7 @@ window.onload = () => {
     commentarySubmit();
     deleteConfirm();
     commentaryDelete();
-    
+// NAVIAGTION MENU
 function navMenu() {
     // ----> NAVIGATION :
     document.querySelectorAll(".home_nav button").forEach(button => {
@@ -33,7 +33,6 @@ function navMenu() {
                 }
                 }).then(response => 
                 response = response.json()
-        
                 ).then(data => {
                 // mise à jours du contenue de la page
                 const content = document.querySelector(".home_content");
@@ -52,6 +51,7 @@ function navMenu() {
         })
     })
 }
+// PAGINATION
 function  ListPage() {
     // formulaire de filtre
     const filtersForm = document.querySelector(".users-filters");
@@ -75,24 +75,62 @@ function  ListPage() {
             if (button.id == "recipesPrev") { Params.append("recipesListPage", recipePage -1),
                                             document.querySelector('#recipes_pages').value = (recipePage -1)
                                             ParamsAttr = "recipe"
+                                            if (document.querySelector("#search_input").value === '') {
+                                                Params.append('search','null')
+                                            } else {
+                                                Params.append('search', document.querySelector("#search_input").value)
+                                            }
+                                            if (document.querySelector("#diet_filter")) {
                                             if (document.querySelector("#diet_filter").checked == true ||
-                                            document.querySelector("#allergen_filter").checked == true ) {
+                                            document.querySelector("#allergen_filter").checked == true ||
+                                            document.querySelector("#recette_filter").checked === true  ) {
                                             // recupération des données du formulaire de filtre
                                             const Form = new FormData(filtersForm);
                                             Form.forEach((value, key) => {
                                                 Params.append(key, value);})
-                                            } }
+                                            // request false
+                                            if (document.querySelector("#diet_filter").checked === false ) {
+                                                Params.append('diet_filter', 'false') } 
+                                            if (document.querySelector("#allergen_filter").checked === false ) {
+                                                Params.append('allergen_filter', 'false')} 
+                                            if (document.querySelector("#recette_filter").checked === false ) {
+                                                Params.append('recette_filter', 'false') } 
+
+                                                Params.append('filters', 'true');
+                                            } else { 
+                                                Params.append('filters', 'null'); } 
+                                            } 
+                                        }
+
             if (button.id == "recipesNext") { Params.append("recipesListPage", recipePage +1),
                                             document.querySelector('#recipes_pages').value = (recipePage +1)
                                             ParamsAttr = "recipe"
+                                            if (document.querySelector("#search_input").value === '') {
+                                                Params.append('search','null')
+                                            } else {
+                                                Params.append('search', document.querySelector("#search_input").value)
+                                            }
+                                            if (document.querySelector("#diet_filter")) {
                                             if (document.querySelector("#diet_filter").checked == true ||
-                                            document.querySelector("#allergen_filter").checked == true ) {
+                                            document.querySelector("#allergen_filter").checked == true ||
+                                            document.querySelector("#recette_filter").checked === true ) {
                                             // recupération des données du formulaire
                                             const Form = new FormData(filtersForm);
                                             Form.forEach((value, key) => {
                                                 Params.append(key, value);})
-                                            }
-                                        }  
+                                                        // request false
+                                            if (document.querySelector("#diet_filter").checked === false ) {
+                                                Params.append('diet_filter', 'false') } 
+                                            if (document.querySelector("#allergen_filter").checked === false ) {
+                                                Params.append('allergen_filter', 'false')} 
+                                            if (document.querySelector("#recette_filter").checked === false ) {
+                                                Params.append('recette_filter', 'false') } 
+
+                                                Params.append('filters', 'true')
+                                            } else {
+                                                Params.append('filters', 'null'); }
+                                            } 
+                                        } 
             
             if (button.id == "servicesPrev") { Params.append("servicesListPage", servicePage -1),
                                             document.querySelector('#services_pages').value = (servicePage -1)
@@ -150,6 +188,7 @@ function  ListPage() {
         }) 
     })
 } 
+// FICHE DETAIL
 function GetClass() {
     // ----> NAVIGATION :
     if (document.querySelector(".class_btn")) {
@@ -157,13 +196,11 @@ function GetClass() {
         button.addEventListener("click", () => { 
             // creation des parametre url (queryString)
             const Params = new URLSearchParams();
-
             // récupération de l'url courante
             const Url = new URL(window.location.href);
-
+            // récupération de l'id cliqué
             if (button.id == "recipeClass") { Params.append("recipeid", button.value),
                                             ParamsAttr = "recipes"}
-
             // requete AJAX 
             fetch("/"+ParamsAttr+ "?" + Params.toString()+ "&ajax=1", {
                 headers: {
@@ -176,7 +213,6 @@ function GetClass() {
                 // mise à jours du contenue de la page
                 const content = document.querySelector(".home_content");
                 content.innerHTML = data.content;
-        
                 // mise à jours de l'url 
                 history.pushState({}, null, Url.pathname + "?" + Params.toString())
                 // appel aux fonctions
@@ -192,6 +228,7 @@ function GetClass() {
         })
     })
 }}
+// FILTRAGE
 function ListFilter() {
     if (document.querySelectorAll(".users-filters input")) {
     const filtersForm = document.querySelector(".users-filters");
@@ -206,18 +243,36 @@ function ListFilter() {
             // recupération des données du filtre
             const Form = new FormData(filtersForm);
             Form.forEach((value, key) => {
-                Params.append(key, value);
+                Params.append(key, value); 
             })
             // recupération des données de la recherche
-            if (document.querySelector("#search_input").value) {
+            if (document.querySelector("#search_input").value === '') {
+                Params.append('search','null')
+            } else {
                 Params.append('search', document.querySelector("#search_input").value)
             }
-            if (document.querySelector("#diet_filter").checked == true ||
-                document.querySelector("#allergen_filter").checked == true ) {
+
             // mise à jour de la page à 1      
             document.querySelector('#recipes_pages').value = (1)
+
+            // Params stats
+            if (document.querySelector("#diet_filter")) {
+            if (document.querySelector("#diet_filter").checked === false ) {
+                    Params.append('diet_filter', 'false') } 
+            if (document.querySelector("#allergen_filter").checked === false ) {
+                    Params.append('allergen_filter', 'false')} 
+            if (document.querySelector("#recette_filter").checked === false ) {
+                    Params.append('recette_filter', 'false') } 
+            if (document.querySelector("#diet_filter").checked === true ||
+                document.querySelector("#allergen_filter").checked === true ||
+                document.querySelector("#recette_filter").checked === true ) { 
+                    Params.append('filters', 'true');
+            } else {
+                    Params.append('filters', 'null'); } 
+            }
+
             // requete AJAX 
-            fetch(Url.pathname + "?" + Params.toString()+ "&ajax=1", {
+            fetch(Url.pathname + "?" + Params.toString() + "&ajax=1", {
                 headers: {
                     "x-Requested-With": "XMLHttpRequest"
                 }
@@ -225,7 +280,7 @@ function ListFilter() {
                 response = response.json()
         
                 ).then(data => {
-                // activation des boutons
+                // activation des boutons pagination
                 if (recipes_pages.value > 1) { recipesPrev.disabled = false } 
                 else { recipesPrev.disabled = true }
                 if (recipes_pages.value < Math.ceil(data.totalRecipes / data.recipesLimit)) 
@@ -238,40 +293,14 @@ function ListFilter() {
                 content.innerHTML = data.content;
                 // mise à jours de l'url 
                 history.pushState({}, null, Url.pathname + "?" + Params.toString())
-        
+               
                 }).catch(error => {
                 console.log(error)
-                }) } else {
-            // requete AJAX 
-            fetch(Url.pathname + "?" + Params.toString() + '&filters=null' + "&ajax=1", {
-                headers: {
-                    "x-Requested-With": "XMLHttpRequest"
-                }
-                }).then(response => 
-                response = response.json()
-        
-                ).then(data => {
-                // activation des boutons
-                if (recipes_pages.value > 1) { recipesPrev.disabled = false } 
-                else { recipesPrev.disabled = true }
-                if (recipes_pages.value < Math.ceil(data.totalRecipes / data.recipesLimit)) 
-                { recipesNext.disabled = false } 
-                else { recipesNext.disabled = true }
-                // mise à jours du nombre total de pages
-                recipes_totalPages.value = (Math.ceil(data.totalRecipes / data.recipesLimit));
-                // mise à jours du contenue de la page
-                const content = document.querySelector(".recipes_list_content");
-                content.innerHTML = data.content;
-                // mise à jours de l'url 
-                history.pushState({}, null, Url.pathname + "?" + Params.toString())
-        
-                }).catch(error => {
-                console.log(error)
-                })
-                }
+                }) 
         }) 
     }) }
 }
+// RECHERCHE
 function ListSearch() {
     if (document.querySelector("#search_btn")) {
     const filtersForm = document.querySelector(".users-filters");
@@ -283,15 +312,33 @@ function ListSearch() {
         const Params = new URLSearchParams();
 
         // initialisation du paramètre
-        Params.append('search', document.querySelector("#search_input").value)
+        if (document.querySelector("#search_input").value === '') {
+            Params.append('search','null')
+        } else {
+            Params.append('search', document.querySelector("#search_input").value)
+        }
+
+        // recupération des données du filtre
+        if (document.querySelector("#diet_filter")) {
         if (document.querySelector("#diet_filter").checked == true || 
-        document.querySelector("#allergen_filter").checked == true ) {
-            // recupération des données du filtre
+        document.querySelector("#allergen_filter").checked == true ||
+        document.querySelector("#recette_filter").checked === true ) {
             const Form = new FormData(filtersForm);
             Form.forEach((value, key) => {
                 Params.append(key, value);
             })
-        }
+            // request false
+            if (document.querySelector("#diet_filter").checked === false ) {
+                Params.append('diet_filter', 'false') } 
+            if (document.querySelector("#allergen_filter").checked === false ) {
+                Params.append('allergen_filter', 'false')} 
+            if (document.querySelector("#recette_filter").checked === false ) {
+                Params.append('recette_filter', 'false') } 
+
+                Params.append('filters', 'true');
+        } else {
+                Params.append('filters', 'null'); }
+        }  
         // mise à jour de la page à 1      
         document.querySelector('#recipes_pages').value = (1)
 
@@ -322,6 +369,7 @@ function ListSearch() {
             })
     }) }
 }
+// NOTATION
 function scoreSelect() {
     if (document.querySelectorAll(".score_form")) {
     // toutes les etoiles
@@ -335,7 +383,6 @@ function scoreSelect() {
         star.addEventListener("mouseover", function(){
             resetStars();
             this.style.color = "orange";
-
             // element précendent dans le DOM
             let previousStar = this.previousElementSibling;
             while(previousStar) {
@@ -356,12 +403,12 @@ function scoreSelect() {
             if (star.dataset.value > note) {
                 star.style.color = "white";
             } else {
-                star.style.color = "orange";
-            }
+                star.style.color = "orange"; }
         }
     }
 }
 }
+// CHARGER PLUS DE COMMENTAIRE
 function commentaryLoad() {
 if (document.querySelector('.commentary_load')) {
     document.querySelector('.commentary_load a').addEventListener('click', () => {
@@ -402,6 +449,7 @@ if (document.querySelector('.commentary_load')) {
     })
 }
 }
+// SOUMETTRE UN COMMANTAIRE
 function commentarySubmit() {
     if (document.querySelector(".commentary_form_content .submit")) {
         document.querySelector(".commentary_form_content .submit").addEventListener("click", (e) => {
@@ -435,18 +483,19 @@ function commentarySubmit() {
 
            // appel aux fonctions
            deleteConfirm();
-           commentaryDelete();
+           commentaryLoad();
 
            }).catch(error => {
            console.log(error)
            })
     }) }
 }
+// CONFIRMATION DE SUPPRESSION
 function deleteConfirm() {
     if (document.querySelector('.commentary_delete')) { 
         document.querySelectorAll('.commentary_delete button').forEach(button => {
             button.addEventListener('click', () => { 
-                document.querySelector(".confirm_content").hidden = false
+                document.querySelector(".confirm_commentary_content").hidden = false
                 // récupération de l'url courante
                 const Url = new URL(window.location.href);
                 // creation des parametre url (queryString)
@@ -455,8 +504,8 @@ function deleteConfirm() {
                 history.pushState({}, null, Url.pathname +'?'+ Params.toString());
             }) 
         })
-        document.querySelector(".confirm_btn #cancel").addEventListener("click", () => {
-            document.querySelector(".confirm_content").hidden = true
+        document.querySelector(".confirm_commentary_btn #cancel").addEventListener("click", () => {
+            document.querySelector(".confirm_commentary_content").hidden = true
             // récupération de l'url courante
             const Url = new URL(window.location.href);
             // creation des parametre url (queryString)
@@ -466,9 +515,10 @@ function deleteConfirm() {
         })
     }
 }
+// SUPPRESSION D'UN COMMENTAIRE
 function commentaryDelete() {
-if (document.querySelector('.confirm_btn #delete')) {
-    document.querySelector('.confirm_btn #delete').addEventListener('click', () => {
+if (document.querySelector('.confirm_commentary_btn #delete')) {
+    document.querySelector('.confirm_commentary_btn #delete').addEventListener('click', () => {
         // récupération de l'url courante
         const Url = new URL(window.location.href);
         // creation des parametre url (queryString)
@@ -488,7 +538,8 @@ if (document.querySelector('.confirm_btn #delete')) {
             // mise à jours de l'url 
             Params.delete('commentaryId');
             history.pushState({}, null, Url.pathname + '?' + Params.toString() );
-            document.querySelector(".confirm_content").hidden = true
+            document.querySelector(".confirm_commentary_content").hidden = true
+            deleteConfirm();
             commentaryLoad();
             }).catch(error => {
             console.log(error)

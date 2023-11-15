@@ -9,8 +9,10 @@ use App\Entity\Services;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+
 use Faker\Factory;
 use Faker\Generator;
+
 class AppFixtures extends Fixture
 {
     /**
@@ -40,6 +42,16 @@ class AppFixtures extends Fixture
             'vegetarien',
             'sans sel',
             'hypoglucidique'
+        );
+        $arr_img = array(
+            'cookie-756601_1280.jpg',
+            'durian-pancake-1203030_1280.jpg',
+            'meatloaf-3747129_1280.jpg',
+            'muffins-5428598_1280.jpg',
+            'pancakes-2291908_1280.jpg',
+            'pancakes-2291908_1280.jpg',
+            'pizza-329523_1280.jpg',
+            'salmon-518032_1280.jpg'
         );
         // --> USER ADMIN
         $user = new User();
@@ -80,6 +92,7 @@ class AppFixtures extends Fixture
 
         // --> RECIPES
         for($i = 1; $i < 20; $i ++) {
+            $image = $arr_img[array_rand($arr_img)];
             $recipe = new Recipes();
             $recipe
                 ->setName($this->faker->lastName())
@@ -90,9 +103,9 @@ class AppFixtures extends Fixture
                 ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
                 ->setDescription($this->faker->paragraph())
                 ->setIngredient([$this->faker->word(), $this->faker->word()])
-                ->setStage([$this->faker->word() => $this->faker->paragraph(), $this->faker->word() => $this->faker->paragraph()])
-                ->setImages([$this->faker->word(), $this->faker->word()])
+                ->setStage([$this->faker->paragraph(), $this->faker->paragraph()])
                 ->setScore(0)
+                ->setImageName($image)
                 ;
             $manager->persist($recipe);
         }
@@ -106,9 +119,9 @@ class AppFixtures extends Fixture
             ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
             ->setDescription($this->faker->paragraph())
             ->setIngredient([$this->faker->word().': 500g', $this->faker->word().': 1/2 L', $this->faker->word().': 150 g'])
-            ->setStage([$this->faker->word() => $this->faker->paragraph(), $this->faker->word() => $this->faker->paragraph()])
-            ->setImages([$this->faker->word(), $this->faker->word()])
+            ->setStage([$this->faker->paragraph(), $this->faker->paragraph()])
             ->setScore(0)
+            ->setImageName($arr_img[array_rand($arr_img)])
             ;
         $manager->persist($recipe2);
         $recipe3 = new Recipes();
@@ -121,9 +134,9 @@ class AppFixtures extends Fixture
         ->setAllergen([$arr_allergen[array_rand($arr_allergen)]])
         ->setDescription($this->faker->paragraph())
         ->setIngredient([$this->faker->word().': 500g', $this->faker->word().': 1/2 L', $this->faker->word().': 150 g'])
-        ->setStage([$this->faker->word() => $this->faker->paragraph(), $this->faker->word() => $this->faker->paragraph()])
-        ->setImages([$this->faker->word(), $this->faker->word()])
+        ->setStage([$this->faker->paragraph(), $this->faker->paragraph()])
         ->setScore(0)
+        ->setImageName($arr_img[array_rand($arr_img)])
         ;
     $manager->persist($recipe3);
 

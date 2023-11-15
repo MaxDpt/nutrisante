@@ -11,6 +11,14 @@
     </div>
 
     <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
         {{ form_label(form.prepaTime) }}
         {{ form_widget(form.prepaTime) }}
         <div class="form_error">
@@ -40,6 +48,10 @@
         <div class="form_error">
             {{ form_errors(form) }}
         </div>
+        <div class="items_btn">
+            <button type="button" class="new-item" value="diet">ajouter</button>
+            <button type="button" class="delete-item" value="diet">Supprimer</button>
+        </div>
     </div>
 
     <div class="form-group">
@@ -48,13 +60,9 @@
         <div class="form_error">
             {{ form_errors(form) }}
         </div>
-    </div>
-
-    <div class="form-group">
-        {{ form_label(form.description) }}
-        {{ form_widget(form.description) }}
-        <div class="form_error">
-            {{ form_errors(form) }}
+        <div class="items_btn">
+            <button type="button" class="new-item" value="allergen">ajouter</button>
+            <button type="button" class="delete-item" value="allergen">Supprimer</button>
         </div>
     </div>
 
@@ -64,6 +72,10 @@
         <div class="form_error">
             {{ form_errors(form) }}
         </div>
+        <div class="items_btn">
+            <button type="button" class="new-item" value="ingredient">ajouter</button>
+            <button type="button" class="delete-item" value="ingredient">Supprimer</button>
+        </div>
     </div>
 
     <div class="form-group">
@@ -72,11 +84,29 @@
         <div class="form_error">
             {{ form_errors(form) }}
         </div>
+    <div class="items_btn">
+            <button type="button" class="new-item" value="stage">ajouter</button>
+            <button type="button" class="delete-item" value="stage">Supprimer</button>
+        </div>
     </div>
 
     <div class="form-group">
-        {{ form_label(form.images) }}
-        {{ form_widget(form.images) }}
+        {{ form_label(form.user) }}
+        <div class="form-group" id="userSearch_content">
+            <input type="text" id="userSearch" placeholder="Nom d'utilisateur"></input>
+            <div class='result_search_content'>
+                {# --- partial search result --- #}
+            </div>
+        </div>
+        {{ form_widget(form.user) }}
+        <div class="form_error">
+            {{ form_errors(form) }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.imageFile) }}
+        {{ form_widget(form.imageFile) }}
         <div class="form_error">
             {{ form_errors(form) }}
         </div>
@@ -85,5 +115,6 @@
     <div class="form-group-submit">
         {{ form_row(form.submit) }}
     </div>
-    {{ form_end(form) }}
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {render_rest: false}) }}
 </div>
