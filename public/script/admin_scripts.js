@@ -1,6 +1,4 @@
 window.onload = () => {
-
-    console.log("hello admin");
     navMenu();
     TablePage();
     GetClass();
@@ -12,7 +10,6 @@ window.onload = () => {
     commentarySubmit();
     deleteConfirm_commentary();
     commentaryDelete();
-
 
 function navMenu() {
     // ----> NAVIGATION :
@@ -169,7 +166,7 @@ function  TablePage() {
         }) 
     })
 } 
- function GetClass() {
+function GetClass() {
      // ----> NAVIGATION :
      document.querySelectorAll(".table button").forEach(button => {
          button.addEventListener("click", () => { 
@@ -178,6 +175,10 @@ function  TablePage() {
  
              // récupération de l'url courante
              const Url = new URL(window.location.href);
+
+             if (Url.search && Url.search.split('=')[0] === '?userid') {
+                Params.append("userid", Url.search.split('?userid=')[1])
+             }
  
              if (button.id == "userClass") { Params.append("userid", button.value),
                                              ParamsAttr = "user"}
@@ -202,6 +203,7 @@ function  TablePage() {
                  // mise à jours du contenue de la page
                  const content = document.querySelector(".admin_content");
                  content.innerHTML = data.content;
+                 GetClass();
                  GetFormClass();
                  deleteConfirm(); 
                  scoreSelect();
@@ -584,8 +586,6 @@ function userSearch() {
             const Url = new URL(window.location.href);
             // creation des parametre url (queryString)
             const Params = new URLSearchParams(Url.search);
-
-            console.log(userSearch.value);
             Params.append('userSearch', userSearch.value);
 
             fetch('/users/search' + "?" + Params.toString() + "&ajax=1", {
@@ -596,7 +596,7 @@ function userSearch() {
                 response = response.json()
         
                 ).then(data => {
-                // mise à jours du contenue de la page
+                // mise à jours du contenue de la recherche
                 const content = document.querySelector(".result_search_content");
                 content.innerHTML = data.content;
                 userSearch_select();
@@ -615,7 +615,7 @@ function userSearch_select () {
             document.querySelector('.form-group #recipes_user').value = a.name;
             document.querySelector('.form-group #userSearch').value = a.id;
 
-            // mise à jours du contenue de la page
+            // mise à jours du contenue de la recherche
             const content = document.querySelector(".result_search_content");
             content.innerHTML = null;
 

@@ -45,7 +45,6 @@ security:
          - { path: ^/recipes/update, roles: ROLE_ADMINISTRATOR }
          - { path: ^/recipes/delete, roles: ROLE_ADMINISTRATOR }
           # --> message protections :
-         - { path: ^/message, roles: ROLE_ADMINISTRATOR }
          - { path: ^/message/delete, roles: ROLE_ADMINISTRATOR }
           # --> commentary protections :
          - { path: ^/commentary/delete, roles: ROLE_ADMINISTRATOR }

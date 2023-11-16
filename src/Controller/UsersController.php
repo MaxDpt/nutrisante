@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UsersType;
 use App\Form\UsersUpdateType;
+use App\Repository\RecipesRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,13 +17,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class UsersController extends AbstractController
 {
     #[Route('/user', name: 'get_user')]
-    public function getOneUser(Request $request, UserRepository $userRepository): Response
+    public function getOneUser(Request $request, UserRepository $userRepository, RecipesRepository $recipesRepository): Response
     {
-        // --> ajax MESSAGES
+        $userId = $request->get('userid');
+        $recipesLimit = 8;
+        $recipesPage = $request->get("recipesTablePage") ? $request->get("recipesTablePage") : 1;
+        $recipes = $recipesRepository->findAllPaginatedRecipesUser($recipesPage, $recipesLimit, $userId  );
+        $totalRecipes = $recipesRepository->getTotalRecipesUser($userId );
+        // --> ajax USER
         if($request->get('ajax') && $request->get('userid')) {
             $user = $userRepository->findOneBy(['id' => $request->get('userid')]);
             return new JsonResponse([
                 'content' => $this->renderView('partials/users/_user_info.html.twig', [
+                    'recipes'=>$recipes,
+                    'totalRecipes'=> $totalRecipes,
+                    'recipesLimit'=>$recipesLimit,
                     'user'=>$user
                 ])
             ]);
@@ -34,7 +43,7 @@ class UsersController extends AbstractController
     #[Route('/users/search', name: 'get_user_search')]
     public function getUsersSearch(Request $request, UserRepository $userRepository): Response
     {
-        // --> ajax MESSAGES
+        // --> ajax SEARCH
         if($request->get('ajax') && $request->get('userSearch')) {
             $userSearch = $request->get('userSearch');
             $users = $userRepository->findAllUsersSearch($userSearch);

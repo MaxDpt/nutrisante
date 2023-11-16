@@ -122,6 +122,16 @@
     height: auto;
     margin: auto;
 }
+#recipe_personalise {
+    position: absolute;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+#icon_personalise {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: rgb(65, 65, 255);
+}
 /*---- COMMENTARY FORM ----*/
 .commentary_form_content {
     background-color: #609A7D;

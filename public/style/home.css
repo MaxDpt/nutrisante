@@ -136,6 +136,14 @@
 .info_title h2 {
     margin: 0.5rem auto;
 }
+/*--- LEGAL NOTICE ---*/
+.legalNotice, .privacyPolicy {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 5rem auto;
+
+}
 @media screen and (max-width: 900px) {
 /*--- NAVIGATION ---*/
 .home_nav {

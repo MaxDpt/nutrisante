@@ -59,6 +59,38 @@ public function findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet = nul
 }
 
 /**
+* @return Recipes[] Returns an array of Recipes objects
+*/
+public function findAllPaginatedRecipesUser($recipesPage, $recipesLimit, $userId = null  )
+{
+    $query = $this->createQueryBuilder('r');
+    $query
+        ->andWhere("r.user = '{$userId}' ")
+        ->orderBy('r.id', 'DESC')
+        ->setFirstResult(($recipesPage * $recipesLimit) - $recipesLimit)
+        ->setMaxResults($recipesLimit);
+
+    return $query->getQuery()->getResult();
+}
+/**
+* @return Recipes[] Returns an array of Recipes objects
+*/
+public function findAllPaginatedRecipesAdmin($recipesPage, $recipesLimit, $search = null )
+{
+    $query = $this->createQueryBuilder('r');
+    if ($search !== null) {
+        $query
+        ->andWhere("r.name LIKE '%{$search}%' ");
+    }
+    $query
+        ->orderBy('r.id', 'DESC')
+        ->setFirstResult(($recipesPage * $recipesLimit) - $recipesLimit)
+        ->setMaxResults($recipesLimit);
+
+    return $query->getQuery()->getResult();
+}
+
+/**
 * @return Count Returns total number of Recipes
 */
 public function getTotalRecipes($diet = null, $allergen = null, $search = null, $userId = '')
@@ -87,6 +119,34 @@ public function getTotalRecipes($diet = null, $allergen = null, $search = null, 
             ->andWhere("r.allergen NOT LIKE '%{$allergen[$i]}%' ");
     }}
     $query ->select('COUNT(r)');
+   
+   return $query->getQuery()->getSingleScalarResult();
+}
+/**
+* @return Count Returns total number of Recipes
+*/
+public function getTotalRecipesAdmin($search = null)
+{
+   $query = $this->createQueryBuilder('r');
+
+   if ($search !== null) {
+    $query
+    ->andWhere("r.name LIKE '%{$search}%' ");
+    }
+    $query ->select('COUNT(r)');
+   
+   return $query->getQuery()->getSingleScalarResult();
+}
+/**
+* @return Count Returns total number of Recipes
+*/
+public function getTotalRecipesUser($userId = null)
+{
+   $query = $this->createQueryBuilder('r');
+
+    $query 
+    ->andWhere("r.user = '{$userId}' ")
+    ->select('COUNT(r)');
    
    return $query->getQuery()->getSingleScalarResult();
 }

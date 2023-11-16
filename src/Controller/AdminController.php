@@ -32,8 +32,8 @@ class AdminController extends AbstractController
         /* --- RECIPES --- */
         $recipesLimit = 8;
         $recipesPage = $request->get("recipesTablePage") ? $request->get("recipesTablePage") : 1;
-        $recipes = $recipesRepository->findAllPaginatedRecipes($recipesPage, $recipesLimit);
-        $totalRecipes = $recipesRepository->getTotalRecipes();
+        $recipes = $recipesRepository->findAllPaginatedRecipesAdmin($recipesPage, $recipesLimit );
+        $totalRecipes = $recipesRepository->getTotalRecipesAdmin();
         /* --- SERVICES --- */
         $servicesLimit = 8;
         $servicesPage = $request->get("servicesTablePage") ? $request->get("servicesTablePage") : 1;

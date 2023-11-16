@@ -28,4 +28,26 @@
 </table>
 </div>
 
+
+<div class="recipes_table_user">
+
+<div class="recipe_header">
+  <h2>RECETTE PERSONALISE</h2>
+</div>
+
+<div class="pagination" id="pagination_userRecipes">
+  {# Pagination des recettes #}
+  <button id="recipesPrev" disabled>Prev</button>
+    <input id="recipes_pages" value="{{1}}" disabled>
+    <p>/</p>
+    <input id="recipes_totalPages" value="{{(totalRecipes / recipesLimit)|round(0, 'ceil')}}" disabled>
+    <p>page(s)</p>
+  <button id="recipesNext" >Next</button>
+</div>
+
+<div class="recipes_table_content_user">
+  {% include "partials/recipes/_recipes_table.html.twig" %}
+</div>
+</div>
+
 {% include "partials/_confirm.html.twig" %}

@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\Length;
 
 class HomeController extends AbstractController
 {
@@ -24,6 +23,7 @@ class HomeController extends AbstractController
         $diet = $user && $user->roles[0] !== 'ROLE_ADMINISTRATOR' ? $user->diet : null;
         $allergen = $user && $user->roles[0] !== 'ROLE_ADMINISTRATOR' ? $user->allergen : null;
         $userId = $user && $user->roles[0] !== 'ROLE_ADMINISTRATOR' ? $user->id : null;
+        $search = $request->get('search') && $request->get('search') !== 'null' ? $request->get('search') : null;
 
         if ($user && $request->get('diet_filter') === 'false') { 
             $diet = null;
@@ -40,12 +40,15 @@ class HomeController extends AbstractController
             $userId = null; 
         }
 
-        $search = $request->get('search') && $request->get('search') !== 'null' ? $request->get('search') : null;
         /* --- RECIPES --- */
         $recipesLimit = 8;
         $recipesPage = $request->get("recipesListPage") ? $request->get("recipesListPage") : 1;
-        $recipes = $recipesRepository->findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet, $allergen, $search, $userId);
-        $totalRecipes = $recipesRepository->getTotalRecipes($diet, $allergen, $search, $userId);
+        if ($user && $user->roles[0] === 'ROLE_ADMINISTRATOR' ) {
+            $recipes = $recipesRepository->findAllPaginatedRecipesAdmin($recipesPage, $recipesLimit );
+            $totalRecipes = $recipesRepository->getTotalRecipesAdmin();   
+        } else {
+            $recipes = $recipesRepository->findAllPaginatedRecipes($recipesPage, $recipesLimit, $diet, $allergen, $search, $userId);
+            $totalRecipes = $recipesRepository->getTotalRecipes($diet, $allergen, $search, $userId); }
         /* --- SERVICES --- */
         $servicesLimit = 4;
         $servicesPage = $request->get("servicesListPage") ? $request->get("servicesListPage") : 1;
@@ -169,6 +172,7 @@ class HomeController extends AbstractController
     {
         // --> LEGAL NOTICE PAGE
         return $this->render('pages/legalNotice_page.html.twig', [
+            'userConnected' => $this->getUser(),
             'controller_name' => 'HomeController',
         ]);
     }
@@ -178,6 +182,7 @@ class HomeController extends AbstractController
     {
         // --> PRIVACY POLICY PAGE
         return $this->render('pages/privacyPolicy_page.html.twig', [
+            'userConnected' => $this->getUser(),
             'controller_name' => 'HomeController',
         ]);
     }

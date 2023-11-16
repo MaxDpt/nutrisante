@@ -144,6 +144,15 @@ th, td {
     min-height: 20rem; 
     background-color: #F3F3F7;
 }
+.recipes_table_user {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 0 auto;
+}
+#pagination_userRecipes {
+    margin: 1rem 0;
+}
 .info-button {
     display: flex;
     flex-direction: row;

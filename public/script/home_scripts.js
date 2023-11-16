@@ -293,6 +293,7 @@ function ListFilter() {
                 content.innerHTML = data.content;
                 // mise à jours de l'url 
                 history.pushState({}, null, Url.pathname + "?" + Params.toString())
+                GetClass();
                
                 }).catch(error => {
                 console.log(error)
@@ -441,7 +442,6 @@ if (document.querySelector('.commentary_load')) {
 
         // appel aux fonctions
         deleteConfirm();
-        commentaryLoad();
         }).catch(error => {
         console.log(error)
         })

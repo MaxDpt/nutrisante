@@ -65,7 +65,7 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         // --> USERS
-        for($i = 1; $i < 20; $i ++) {
+        for($i = 1; $i < 12; $i ++) {
             $users = new User();
             $users
                 ->setName($this->faker->lastName())
@@ -91,7 +91,7 @@ class AppFixtures extends Fixture
         $manager->persist($users2);
 
         // --> RECIPES
-        for($i = 1; $i < 20; $i ++) {
+        for($i = 1; $i < 10; $i ++) {
             $image = $arr_img[array_rand($arr_img)];
             $recipe = new Recipes();
             $recipe
@@ -141,7 +141,7 @@ class AppFixtures extends Fixture
     $manager->persist($recipe3);
 
         // --> SERVICES
-        for($i = 1; $i < 15; $i ++) {
+        for($i = 1; $i < 6; $i ++) {
             $services = new Services();
             $services
                 ->setName($this->faker->word())
@@ -151,7 +151,7 @@ class AppFixtures extends Fixture
         }
 
         // --> CONTACTS
-        for($i = 1; $i < 32; $i ++) {
+        for($i = 1; $i < 12; $i ++) {
             $services = new Contact();
             $services
             ->setName($this->faker->lastName())
